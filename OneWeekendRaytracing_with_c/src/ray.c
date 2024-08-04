@@ -1,22 +1,22 @@
 #include "ray.h"
 
-ray ray_create(vec3 origin, vec3 direction)
+t_ray ray_create(t_vec3 origin, t_vec3 direction)
 {
-    ray r = {origin, direction};
+    t_ray r = {origin, direction};
     return (r);
 }
 
-vec3 ray_origin(ray r)
+t_vec3 ray_origin(t_ray r)
 {
     return (r.orig);
 }
 
-vec3 ray_direction(ray r)
+t_vec3 ray_direction(t_ray r)
 {
     return (r.dir);
 }
 
-vec3 ray_at(ray r, double t)
+t_vec3 ray_at(t_ray r, double t)
 {
     return (vec3_add(r.orig, vec3_mul(t, r.dir)));
 }
