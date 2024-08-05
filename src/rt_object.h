@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 13:57:30 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/05 19:47:18 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ typedef struct s_rt_obj
 {
 	t_obj_type	type;
 	void		*obj_ptr;
-	t_hit(*hit(t_ray, void *));
+	t_hit(*hit(const t_ray *, void *));
 }				t_rt_obj;
 
 t_rt_obj		*new_obj(t_obj_type t, t_obj_desc d);
