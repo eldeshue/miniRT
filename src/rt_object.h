@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:28:05 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:46:18 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@ typedef enum e_obj_type
 {
 	error,
 	plane,
+	square,
+	triangle,
 	sphere,
 	cylinder,
 	cone
@@ -33,8 +35,9 @@ typedef enum e_obj_type
 typedef struct s_obj_desc
 {
 	t_material	m;
-	t_FTMFLOAT4	point1;
-	t_FTMFLOAT4	point2;
+	t_FTMFLOAT4	p1;
+	t_FTMFLOAT4	p2;
+	t_FTMFLOAT4	p3;
 	float		val;
 }				t_obj_desc;
 
@@ -59,6 +62,30 @@ typedef struct s_plane
 
 t_plane			*new_plane(t_obj_desc d);
 void			delete_plane(t_plane *self);
+
+// square
+typedef struct s_square
+{
+	t_material	m;
+	t_FTMFLOAT4	pcenter;
+	t_FTMFLOAT4	vnormal;
+	float		len;
+}				t_square;
+
+t_plane			*new_square(t_obj_desc d);
+void			delete_square(t_plane *self);
+
+// triangle
+typedef struct s_triangle
+{
+	t_material	m;
+	t_FTMFLOAT4	p1;
+	t_FTMFLOAT4	p2;
+	t_FTMFLOAT4	p3;
+}				t_triangle;
+
+t_plane			*new_triangle(t_obj_desc d);
+void			delete_triangle(t_plane *self);
 
 // sphere
 typedef struct s_sphere
