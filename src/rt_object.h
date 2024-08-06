@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 19:47:18 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/06 18:28:05 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 typedef enum e_obj_type
 {
 	error,
+	plane,
 	sphere,
 	cylinder,
 	cone
@@ -47,6 +48,17 @@ typedef struct s_rt_obj
 
 t_rt_obj		*new_obj(t_obj_type t, t_obj_desc d);
 void			delete_obj(t_rt_obj *self);
+
+// plane
+typedef struct s_plane
+{
+	t_material	m;
+	t_FTMFLOAT4	pcenter;
+	t_FTMFLOAT4	vnormal;
+}				t_plane;
+
+t_plane			*new_plane(t_obj_desc d);
+void			delete_plane(t_plane *self);
 
 // sphere
 typedef struct s_sphere
