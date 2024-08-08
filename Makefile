@@ -1,12 +1,22 @@
+
+# compiler option
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
+LDFLAGS = -lm -L. -lmlx -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./src/ft_graphics/ft_math -lftmath -L./src/ft_string -lftstring -L./src/ft_vector -lftvector
 
-srcs = color.c main.c ray.c vec3.c object/sphere.c
+# target rule
+NAME = minirt
+
+srcs =
 
 srcs := $(addprefix src/, $(srcs))
 OBJS := $(srcs:.c=.o)
-NAME = minirt
-# LIBFT = NONE
+
+# path
+FT_GRAPHICS_DIR = ./src/ft_graphics
+FT_STRING_DIR = ./src/ft_string
+FT_VECTOR_DIR = ./src/ft_vector
+LIBFT_DIR = ./src/libft
 
 # 색상 정의
 SKYBLUE=\033[0;36m
@@ -30,8 +40,15 @@ MOVE_DOWN=\033[1B
 all : $(NAME)
 
 $(NAME): $(OBJS)
+	$(MAKE) -C $(FT_GRAPHICS_DIR)
+	$(MAKE) -C $(FT_STRING_DIR)
+	$(MAKE) -C $(FT_VECTOR_DIR)
+	$(MAKE) -C $(LIBFT_DIR)
+	if ! [ -f "./libmlx.dylib" ]; then \
+		mv ./src/libmlx.dylib ./; \
+	fi
 	@echo "$(CLEAR_LINE)	[ $(SKYBLUE)$(NAME) $(RESET)] $(GREEN)created$(RESET)"
-	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -I includes
+	@$(CC) $(LDFLAGS) $(OBJS) -o $@
 	@echo "\n How to run $(SKYBLUE)$(NAME)"
 	@echo "\n	$(SKYBLUE)./$(NAME)$(RESET)"
 
@@ -45,12 +62,16 @@ $(NAME): $(OBJS)
 %.o : %.c
 	@printf "$(CLEAR_LINE)			$(BLUE)~~ $(RESET)Making object for $(SKYBLUE)(miniRT) $(BLUE)~~$(RESET)\n"
 	@printf "$(CLEAR_LINE)		$(BLUE)~~$(RESET) $(RESET) Making $(YELLOW)$@$(RESET) from $(YELLOW)$<$(RESET) $(BLUE)~~$(RESET)$(MOVE_UP)"
-	@$(CC) $(CFLAGS) -c $< -o $@ -I includes
+	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
 	@sleep 0.5
 	@echo "$(CLEAR_LINE)		$(YELLOW)~~$(RED)Cleaing Object files $(YELLOW)~~$(RESET)\n$(MOVE_DOWN)"
-	@rm -rf $(OBJS)
+	$(MAKE) -C $(FT_GRAPHICS_DIR) clean
+	$(MAKE) -C $(FT_STRING_DIR) clean
+	$(MAKE) -C $(FT_VECTOR_DIR) clean
+	$(MAKE) -C $(LIBFT_DIR) clean
+	@rm -f $(OBJS)
 	@sleep 0.1
 	@echo "$(CLEAR_LINE)		$(RED)Removing Object files.$(RESET)"
 	@sleep 0.2
@@ -61,7 +82,14 @@ clean:
 	@echo "$(MOVE_UP)$(CLEAR_LINE)		$(YELLOW)Object files$(RESET) $(RED)removed$(RESET)$(MOVE_DOWN)"
 
 fclean: clean
-	@rm -f $(NAME) $(TEST_EXEC) $(prs_TEST_EXEC) $(EXECUTE_TEST_EXEC)
+	if [ -f "./libmlx.dylib" ]; then \
+		mv ./libmlx.dylib ./src; \
+	fi
+	$(MAKE) -C $(FT_GRAPHICS_DIR) fclean
+	$(MAKE) -C $(FT_STRING_DIR) fclean
+	$(MAKE) -C $(FT_VECTOR_DIR) fclean
+	$(MAKE) -C $(LIBFT_DIR) fclean
+	@rm -f $(NAME)
 	@sleep 0.5
 	@echo "$(CLEAR_LINE)		[ $(SKYBLUE)$(NAME) $(RESET)] $(RED)removed$(RESET)"
 
