@@ -6,18 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:15:47 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/07 21:40:40 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/08 13:34:25 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raytracer.h"
 #include "math.h"
-
-static t_FTMFLOAT4	vmult(t_FTMFLOAT4 *v, float m)
-{
-	return (ftmf4_set_vector(v->data[0] * m, v->data[1] * m,
-			v->data[2] * m, v->data[3]));
-}
 
 /*
 	asp : aspect ratio, width / height
@@ -52,6 +46,9 @@ static void	set_property(t_render_resource *const prsrc,
 	del_y->data[0] *= -dy;
 	del_y->data[1] *= -dy;
 	del_y->data[2] *= -dy;
+	*left_up_point
+		= ftmf4_vadd(left_up_point,
+			ftmf4_vadd(vmult(del_x, 0.5f), vmult(del_y, 0.5f)));
 }
 
 /*
@@ -83,9 +80,7 @@ static void	set_points(t_render_resource *const prsrc,
 void	set_view_plane(t_render_resource *const prsrc)
 {
 	t_FTMFLOAT4			plu;
-	t_FTMFLOAT4			vdelx;
-	t_FTMFLOAT4			vdely;
 
-	set_property(prsrc, &plu, &vdelx, &vdely);
-	set_points(prsrc, &plu, &vdelx, &vdely);
+	set_property(prsrc, &plu, &vdx, &vdy);
+	set_points(prsrc, &plu, &vdx, &vdy);
 }
