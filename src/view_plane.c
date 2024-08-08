@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:15:47 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/08 13:34:25 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/08 14:40:27 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,6 @@ void	set_view_plane(t_render_resource *const prsrc)
 {
 	t_FTMFLOAT4			plu;
 
-	set_property(prsrc, &plu, &vdx, &vdy);
-	set_points(prsrc, &plu, &vdx, &vdy);
+	set_property(prsrc, &plu, &prsrc->vdx, &prsrc->vdy);
+	set_points(prsrc, &plu, &prsrc->vdx, &prsrc->vdy);
 }
