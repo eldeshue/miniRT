@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/08 13:33:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/08 19:34:40 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,15 +40,16 @@ typedef struct s_render_resource
 }				t_render_resource;
 
 // resource initialize
-// int			set_render_resource(t_render_resource *self, char **argv);
-// void			destruct_render_resource(t_render_resource *self);
-void			set_view_plane(t_render_resource *const prsrc);
+t_render_resource	*new_render_resource(void);
+int					init_render_resource(t_render_resource *self, char **argv);
+void				delete_render_resource(t_render_resource *self);
+void				set_view_plane(t_render_resource *const prsrc);
 
 // render
 // TODO : rendering routine
 
 // etc
-float			clamp(float f);					// clamp color channels, 0~255
-t_FTMFLOAT4		vmult(t_FTMFLOAT4 *v, float m);	// vector-scala multiplication
+float				clamp(float f);
+t_FTMFLOAT4			vmult(t_FTMFLOAT4 *v, float m);
 
 #endif
