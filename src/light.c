@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.h                                            :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:44 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 18:17:01 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/09 18:17:59 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 18:23:05 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIGHT_H
-# define LIGHT_H
+#include "light.h"
+#include <stdlib.h>
 
-# include "./ft_graphics/ft_math/ft_math.h"
-
-typedef struct s_light
+int	alloc_light(void *paddr, void *plight)
 {
-	t_FTMFLOAT4	ppos;
-	t_FTMFLOAT4	color;
-}				t_light;
+	t_light *const	param = plight;
 
-int				alloc_light(void *paddr, void *plight);
-void			free_light(void *paddr);
+	*(t_light **)paddr = malloc(sizeof(t_light));
+	if (*(t_light **)paddr == NULL)
+		return (0);
+	**(t_light **)paddr = *param;
+	return (1);
+}
 
-#endif
+void	free_light(void *paddr)
+{
+	free(*(t_light **)paddr);
+}
