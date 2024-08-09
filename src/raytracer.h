@@ -6,16 +6,18 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 14:26:22 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 15:26:45 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYTRACER_H
 # define RAYTRACER_H
 
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
+
 # include "./ft_graphics/ft_graphics.h"
 # include "./ft_vector/ft_vector.h"
-# include "ray.h"
 
 /*
 	ftmlx	: mlx object
@@ -35,9 +37,10 @@ typedef struct s_render_resource
 	float		fov;
 	t_FTMFLOAT4	vdx;
 	t_FTMFLOAT4	vdy;
-	// TODO : global ambient light
-	// TODO : vector of lights
-	// TODO : vector of render target objects
+	float		amb_intens;
+	t_FTMFLOAT4	amb_color;
+	t_ft_vector	*lights;
+	t_ft_vector	*render_objects;
 }				t_render_resource;
 
 // resource initialize
