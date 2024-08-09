@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/08 19:34:40 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 14:26:22 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define RAYTRACER_H
 
 # include "./ft_graphics/ft_graphics.h"
+# include "./ft_vector/ft_vector.h"
 # include "ray.h"
 
 /*
@@ -46,7 +47,11 @@ void				delete_render_resource(t_render_resource *self);
 void				set_view_plane(t_render_resource *const prsrc);
 
 // render
-// TODO : rendering routine
+// TODO : rendering window
+// TODO : rendering image
+
+// mlx hook
+void				set_rt_hook(t_FTMLX *pmlx);
 
 // etc
 float				clamp(float f);
