@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_strlcpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/06 17:46:56 by dogwak            #+#    #+#             */
+/*   Updated: 2023/10/10 16:29:56 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "libft.h"
 
-# include "rt_object.h"
+size_t	ft_strlcpy(char *dst, const char *src, size_t dstsize)
+{
+	size_t			src_len;
+	size_t			idx;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+	src_len = ft_strlen(src);
+	idx = 0;
+	while (idx < src_len && (idx + 1) < dstsize)
+	{
+		dst[idx] = src[idx];
+		idx++;
+	}
+	if (dstsize > 0)
+		dst[idx] = '\0';
+	return (src_len);
+}

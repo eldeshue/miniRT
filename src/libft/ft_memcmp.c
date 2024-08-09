@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/09 15:05:42 by dogwak            #+#    #+#             */
+/*   Updated: 2023/10/09 18:48:21 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "libft.h"
 
-# include "rt_object.h"
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
+{
+	size_t				idx;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+	idx = -1;
+	while (++idx < n)
+	{
+		if (((unsigned char *)s1)[idx] != ((unsigned char *)s2)[idx])
+		{
+			return (((unsigned char *)s1)[idx] - ((unsigned char *)s2)[idx]);
+		}
+	}
+	return (0);
+}

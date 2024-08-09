@@ -1,25 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_vector_set_member_function.c                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/12/12 13:42:45 by dogwak            #+#    #+#             */
+/*   Updated: 2023/12/12 13:44:33 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "ft_vector_member.h"
 
-# include "rt_object.h"
-
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+void	set_vector_member_function(t_ft_vector *this)
+{
+	this->at = ft_vec_at;
+	this->front = ft_vec_front;
+	this->back = ft_vec_back;
+	this->empty = ft_vec_empty;
+	this->clear = ft_vec_clear;
+	this->push_back = ft_vec_push_back;
+	this->resize = ft_vec_resize;
+}

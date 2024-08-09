@@ -1,25 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/06 14:09:43 by dogwak            #+#    #+#             */
+/*   Updated: 2023/10/12 18:59:38 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "libft.h"
 
-# include "rt_object.h"
+char	*ft_strjoin(char const *s1, char const *s2)
+{
+	size_t				dst_size;
+	char				*str;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+	dst_size = ft_strlen(s1);
+	dst_size += ft_strlen(s2) + 1;
+	str = (char *)malloc((dst_size) * sizeof(char));
+	if (str == NULL)
+		return (NULL);
+	ft_strlcpy(str, s1, dst_size);
+	ft_strlcat(str, s2, dst_size);
+	return (str);
+}

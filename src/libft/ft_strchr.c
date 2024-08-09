@@ -1,25 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/07 17:07:24 by dogwak            #+#    #+#             */
+/*   Updated: 2023/10/09 21:07:50 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "libft.h"
 
-# include "rt_object.h"
+char	*ft_strchr(const char *s, int c)
+{
+	size_t			idx;
+	size_t			s_size;
+	char			*result;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+	idx = 0;
+	s_size = ft_strlen(s) + 1;
+	result = NULL;
+	while (idx < s_size)
+	{
+		if (s[idx] == (char)c)
+		{
+			result = (char *)(s + idx);
+			break ;
+		}
+		idx++;
+	}
+	return (result);
+}

@@ -2,9 +2,9 @@ name: 42_C_valid_test
 
 on:
   push:
-    branches: [ "dev" ]
+    branches: [ "main" ]
   pull_request:
-    branches: [ "dev" ]
+    branches: [ "main" ]
 
 jobs:
   norm:
@@ -12,14 +12,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v4
-    
+
     - name: Install 42-norminette
-      run: 
+      run:
         python3 -m venv norminette_venv
         source norminette_venv/bin/activate
         python3 -m pip install --upgrade pip setuptools
         python3 -m pip install --upgrade norminette
-    
+
     - name : run norm
       run:
         source norminette_venv/bin/activate
@@ -34,7 +34,7 @@ jobs:
 
       - name: 🛒 Install build-essentials
         run: brew install gcc cmake make
-      
+
       - name: 🚩 Compile with options -Wall -Wextra -Werror
         run: |
           mkdir build

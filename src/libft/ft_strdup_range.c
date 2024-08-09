@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_strdup_range.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/06 21:16:43 by dogwak            #+#    #+#             */
+/*   Updated: 2023/10/10 16:42:24 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "libft.h"
 
-# include "rt_object.h"
+char	*ft_strdup_range(const char *origin, size_t start, size_t end)
+{
+	char			*dst;
+	size_t			idx;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+	if (start > end)
+		return (NULL);
+	dst = (char *)malloc(sizeof(char) * (end - start + 1));
+	if (dst == NULL)
+		return (NULL);
+	idx = 0;
+	while (idx + start < end)
+	{
+		dst[idx] = origin[start + idx];
+		idx++;
+	}
+	dst[idx] = '\0';
+	return (dst);
+}

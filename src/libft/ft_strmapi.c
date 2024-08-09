@@ -1,25 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2023/10/07 15:00:23 by dogwak            #+#    #+#             */
+/*   Updated: 2023/10/10 15:28:11 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "libft.h"
 
-# include "rt_object.h"
+char	*ft_strmapi(char const *s, char (*f)(unsigned int, char))
+{
+	char			*result_str;
+	size_t			length;
+	size_t			idx;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+	length = ft_strlen(s);
+	result_str = (char *)malloc(sizeof(char) * (length + 1));
+	if (result_str == NULL)
+		return (NULL);
+	idx = 0;
+	while (idx < length)
+	{
+		result_str[idx] = f(idx, s[idx]);
+		idx++;
+	}
+	result_str[idx] = '\0';
+	return (result_str);
+}
