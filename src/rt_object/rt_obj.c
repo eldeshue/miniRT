@@ -6,12 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 18:26:35 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:00:39 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:21:41 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt_object.h"
-#include "colliders.h"
+#include "../collider/colliders.h"
 #include <stdlib.h>
 
 static int	per_type_init(t_rt_obj *pobj, t_obj_desc *pobj_desc)

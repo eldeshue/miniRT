@@ -1,30 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.c                                            :+:      :+:    :+:   */
+/*   hit.h                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/09 18:17:59 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 18:23:05 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/05 11:01:50 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:24:33 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "light.h"
-#include <stdlib.h>
+#ifndef HIT_H
+# define HIT_H
 
-int	alloc_light(void *paddr, void *plight)
+# include "../ft_graphics/ft_math/ft_math.h"
+# include "../rt_object/rt_object.h"
+
+typedef struct s_hit
 {
-	t_light *const	param = plight;
+	float		dist;
+	t_FTMFLOAT4	ppos;
+	t_FTMFLOAT4	vnormal;
+	t_rt_obj	*pobj;
+}				t_hit;
 
-	*(t_light **)paddr = malloc(sizeof(t_light));
-	if (*(t_light **)paddr == NULL)
-		return (0);
-	**(t_light **)paddr = *param;
-	return (1);
-}
-
-void	free_light(void *paddr)
-{
-	free(*(t_light **)paddr);
-}
+#endif

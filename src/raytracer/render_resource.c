@@ -6,13 +6,13 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:14:41 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 18:28:43 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:25:51 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
-#include "light.h"
-#include "rt_object.h"
+#include "../light/light.h"
+#include "../rt_object/rt_object.h"
 
 t_render_resource	*new_render_resource(void)
 {

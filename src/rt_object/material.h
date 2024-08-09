@@ -1,27 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit.h                                              :+:      :+:    :+:   */
+/*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:50 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 13:55:32 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/05 12:42:38 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:28:16 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HIT_H
-# define HIT_H
+#ifndef MATERIAL_H
+# define MATERIAL_H
 
-# include "./ft_graphics/ft_math/ft_math.h"
-# include "rt_object.h"
+# include "../ft_graphics/ft_math/ft_math.h"
 
-typedef struct s_hit
+typedef struct s_material
 {
-	float		dist;
-	t_FTMFLOAT4	ppos;
-	t_FTMFLOAT4	vnormal;
-	t_rt_obj	*pobj;
-}				t_hit;
+	t_FTMFLOAT4	amb_color;
+	float		ka;
+	float		kd;
+	float		ks;
+	float		specular_pow;
+}				t_material;
 
 #endif

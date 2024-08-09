@@ -6,12 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:22:00 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 14:23:30 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:26:08 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
-#include "./ft_graphics/ft_keycode.h"
+#include "../ft_graphics/ft_keycode.h"
 
 static int	exit_hook(void)
 {

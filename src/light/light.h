@@ -1,27 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   material.h                                         :+:      :+:    :+:   */
+/*   light.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 12:42:38 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 14:06:33 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/05 11:01:44 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:21:10 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATERIAL_H
-# define MATERIAL_H
+#ifndef LIGHT_H
+# define LIGHT_H
 
-# include "./ft_graphics/ft_math/ft_math.h"
+# include "../ft_graphics/ft_math/ft_math.h"
 
-typedef struct s_material
+typedef struct s_light
 {
-	t_FTMFLOAT4	amb_color;
-	float		ka;
-	float		kd;
-	float		ks;
-	float		specular_pow;
-}				t_material;
+	t_FTMFLOAT4	ppos;
+	t_FTMFLOAT4	color;
+	float		intensity;
+}				t_light;
+
+int				alloc_light(void *paddr, void *plight);
+void			free_light(void *paddr);
 
 #endif

@@ -6,17 +6,17 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 19:54:28 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:22:32 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_OBJECT_H
 # define RT_OBJECT_H
 
-# include "./ft_graphics/ft_math/ft_math.h"
-# include "hit.h"
-# include "ray.h"
-# include "material.h"
+# include "../ft_graphics/ft_math/ft_math.h"
+# include "../hit/hit.h"
+# include "../ray/ray.h"
+# include "../rt_object/material.h"
 
 // enum
 typedef enum e_obj_type

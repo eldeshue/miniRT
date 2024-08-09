@@ -1,27 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.h                                            :+:      :+:    :+:   */
+/*   colliders.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:44 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 18:17:01 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:23:08 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIGHT_H
-# define LIGHT_H
+#ifndef COLLIDERS_H
+# define COLLIDERS_H
 
-# include "./ft_graphics/ft_math/ft_math.h"
+# include "../rt_object/rt_object.h"
 
-typedef struct s_light
-{
-	t_FTMFLOAT4	ppos;
-	t_FTMFLOAT4	color;
-}				t_light;
-
-int				alloc_light(void *paddr, void *plight);
-void			free_light(void *paddr);
+t_hit	collider_plane(const t_ray *r, void *obj);
+t_hit	collider_square(const t_ray *r, void *obj);
+t_hit	collider_triangle(const t_ray *r, void *obj);
+t_hit	collider_sphere(const t_ray *r, void *obj);
+t_hit	collider_cylinder(const t_ray *r, void *obj);
+t_hit	collider_cone(const t_ray *r, void *obj);
 
 #endif

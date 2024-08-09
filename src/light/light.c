@@ -1,25 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:48:30 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/09 18:17:59 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:24:13 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "../light/light.h"
+#include <stdlib.h>
 
-# include "rt_object.h"
+int	alloc_light(void *paddr, void *plight)
+{
+	t_light *const	param = plight;
 
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
+	*(t_light **)paddr = malloc(sizeof(t_light));
+	if (*(t_light **)paddr == NULL)
+		return (0);
+	**(t_light **)paddr = *param;
+	return (1);
+}
 
-#endif
+void	free_light(void *paddr)
+{
+	free(*(t_light **)paddr);
+}
