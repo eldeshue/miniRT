@@ -6,25 +6,23 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/06 18:46:18 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:22:32 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RT_OBJECT_H
 # define RT_OBJECT_H
 
-# include "./ft_graphics/ft_math/ft_math.h"
-# include "hit.h"
-# include "ray.h"
-# include "material.h"
+# include "../ft_graphics/ft_math/ft_math.h"
+# include "../hit/hit.h"
+# include "../ray/ray.h"
+# include "../rt_object/material.h"
 
 // enum
 typedef enum e_obj_type
 {
 	error,
 	plane,
-	square,
-	triangle,
 	sphere,
 	cylinder,
 	cone
@@ -34,23 +32,24 @@ typedef enum e_obj_type
 // will be passed as a parameter
 typedef struct s_obj_desc
 {
+	t_obj_type	type;
 	t_material	m;
 	t_FTMFLOAT4	p1;
 	t_FTMFLOAT4	p2;
-	t_FTMFLOAT4	p3;
 	float		val;
 }				t_obj_desc;
 
 // parent class
+typedef t_hit(*t_hptr)(const t_ray *r, void *obj_ptr);
 typedef struct s_rt_obj
 {
 	t_obj_type	type;
 	void		*obj_ptr;
-	t_hit(*hit(const t_ray *, void *));
+	t_hptr		hit;
 }				t_rt_obj;
 
-t_rt_obj		*new_obj(t_obj_type t, t_obj_desc d);
-void			delete_obj(t_rt_obj *self);
+int				alloc_rt_obj(void *paddr, void *pobj_desc);
+void			free_rt_obj(void *paddr);
 
 // plane
 typedef struct s_plane
@@ -60,32 +59,7 @@ typedef struct s_plane
 	t_FTMFLOAT4	vnormal;
 }				t_plane;
 
-t_plane			*new_plane(t_obj_desc d);
-void			delete_plane(t_plane *self);
-
-// square
-typedef struct s_square
-{
-	t_material	m;
-	t_FTMFLOAT4	pcenter;
-	t_FTMFLOAT4	vnormal;
-	float		len;
-}				t_square;
-
-t_plane			*new_square(t_obj_desc d);
-void			delete_square(t_plane *self);
-
-// triangle
-typedef struct s_triangle
-{
-	t_material	m;
-	t_FTMFLOAT4	p1;
-	t_FTMFLOAT4	p2;
-	t_FTMFLOAT4	p3;
-}				t_triangle;
-
-t_plane			*new_triangle(t_obj_desc d);
-void			delete_triangle(t_plane *self);
+t_plane			*new_plane(t_obj_desc *d);
 
 // sphere
 typedef struct s_sphere
@@ -95,8 +69,7 @@ typedef struct s_sphere
 	float		radius;
 }				t_sphere;
 
-t_sphere		*new_sphere(t_obj_desc d);
-void			delete_sphere(t_sphere *self);
+t_sphere		*new_sphere(t_obj_desc *d);
 
 // cylinder
 typedef struct s_cylinder
@@ -107,8 +80,7 @@ typedef struct s_cylinder
 	float		radius;
 }				t_cylinder;
 
-t_cylinder		*new_cylinder(t_obj_desc d);
-void			delete_cylinder(t_cylinder *self);
+t_cylinder		*new_cylinder(t_obj_desc *d);
 
 // cone
 typedef struct s_cone
@@ -119,7 +91,6 @@ typedef struct s_cone
 	float		radius;
 }				t_cone;
 
-t_cone			*new_cone(t_obj_desc d);
-void			delete_cone(t_cone *self);
+t_cone			*new_cone(t_obj_desc *d);
 
 #endif

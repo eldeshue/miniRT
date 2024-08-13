@@ -6,15 +6,18 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/08 13:33:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:25:24 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef RAYTRACER_H
 # define RAYTRACER_H
 
-# include "./ft_graphics/ft_graphics.h"
-# include "ray.h"
+# define SCREEN_WIDTH 1920
+# define SCREEN_HEIGHT 1080
+
+# include "../ft_graphics/ft_graphics.h"
+# include "../ft_vector/ft_vector.h"
 
 /*
 	ftmlx	: mlx object
@@ -34,21 +37,27 @@ typedef struct s_render_resource
 	float		fov;
 	t_FTMFLOAT4	vdx;
 	t_FTMFLOAT4	vdy;
-	// TODO : global ambient light
-	// TODO : vector of lights
-	// TODO : vector of render target objects
+	float		amb_intens;
+	t_FTMFLOAT4	amb_color;
+	t_ft_vector	*lights;
+	t_ft_vector	*render_objects;
 }				t_render_resource;
 
 // resource initialize
-// int			set_render_resource(t_render_resource *self, char **argv);
-// void			destruct_render_resource(t_render_resource *self);
-void			set_view_plane(t_render_resource *const prsrc);
+t_render_resource	*new_render_resource(void);
+int					init_render_resource(t_render_resource *self, char **argv);
+void				delete_render_resource(t_render_resource *self);
+void				set_view_plane(t_render_resource *const prsrc);
 
 // render
-// TODO : rendering routine
+// TODO : rendering window
+// TODO : rendering image
+
+// mlx hook
+void				set_rt_hook(t_FTMLX *pmlx);
 
 // etc
-float			clamp(float f);					// clamp color channels, 0~255
-t_FTMFLOAT4		vmult(t_FTMFLOAT4 *v, float m);	// vector-scala multiplication
+float				clamp(float f);
+t_FTMFLOAT4			vmult(t_FTMFLOAT4 *v, float m);
 
 #endif

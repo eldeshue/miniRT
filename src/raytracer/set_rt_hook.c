@@ -1,27 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit.h                                              :+:      :+:    :+:   */
+/*   set_rt_hook.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:50 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 13:55:32 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/09 14:22:00 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:26:08 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HIT_H
-# define HIT_H
+#include "raytracer.h"
+#include "../ft_graphics/ft_keycode.h"
 
-# include "./ft_graphics/ft_math/ft_math.h"
-# include "rt_object.h"
-
-typedef struct s_hit
+static int	exit_hook(void)
 {
-	float		dist;
-	t_FTMFLOAT4	ppos;
-	t_FTMFLOAT4	vnormal;
-	t_rt_obj	*pobj;
-}				t_hit;
+	exit(0);
+	return (1);
+}
 
-#endif
+static int	key_hook(int keycode, t_FTMLX *pmlx)
+{
+	if (keycode == KEY_ESC)
+	{
+		mlx_destroy_window(pmlx->hmlx, pmlx->hwin);
+		exit(0);
+	}
+	return (1);
+}
+
+void	set_rt_hook(t_FTMLX *pmlx)
+{
+	mlx_key_hook(pmlx->hwin, key_hook, pmlx);
+	mlx_hook(pmlx->hwin, 17, 0, exit_hook, 0);
+}

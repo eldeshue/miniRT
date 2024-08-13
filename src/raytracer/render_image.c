@@ -1,24 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ray.h                                              :+:      :+:    :+:   */
+/*   render_image.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:54 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 12:10:53 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/09 14:40:13 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 18:31:40 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef RAY_H
-# define RAY_H
+#include "raytracer.h"
 
-# include "./ft_graphics/ft_math/ft_math.h"
-
-typedef struct s_ray
-{
-	t_FTMFLOAT4	pstart;
-	t_FTMFLOAT4	ndir;
-}				t_ray;
-
-#endif
+// TODO : render routine

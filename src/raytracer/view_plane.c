@@ -6,12 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:15:47 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/08 14:40:27 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/09 20:27:53 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./raytracer.h"
-#include "math.h"
+#include "raytracer.h"
+#include <math.h>
 
 /*
 	asp : aspect ratio, width / height
@@ -37,9 +37,9 @@ static void	set_property(t_render_resource *const prsrc,
 	ftmf4_vnormalize(del_x);
 	ftmf4_vnormalize(del_y);
 	*left_up_point
-		= ftmf4_vadd(prsrc->cam.vpos, vmult(prsrc->cam.vtarget, focal_len));
+		= ftmf4_vadd(prsrc->cam.vpos, vmult(&prsrc->cam.vtarget, focal_len));
 	*left_up_point
-		= ftmf4_vadd(ftmf4_vsub(left_up_point, vmult(del_x, asp)), del_y);
+		= ftmf4_vadd(ftmf4_vsub(*left_up_point, vmult(del_x, asp)), *del_y);
 	del_x->data[0] *= dx;
 	del_x->data[1] *= dx;
 	del_x->data[2] *= dx;
@@ -47,7 +47,7 @@ static void	set_property(t_render_resource *const prsrc,
 	del_y->data[1] *= -dy;
 	del_y->data[2] *= -dy;
 	*left_up_point
-		= ftmf4_vadd(left_up_point,
+		= ftmf4_vadd(*left_up_point,
 			ftmf4_vadd(vmult(del_x, 0.5f), vmult(del_y, 0.5f)));
 }
 
