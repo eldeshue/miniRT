@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utility.c                                          :+:      :+:    :+:   */
+/*   trace_ray.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/07 19:25:59 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 15:50:10 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/14 12:07:22 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/14 15:56:30 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
+#include "../ray/ray.h"
+#include "../hit/hit.h"
 
-static void	clamp_channel(float *pf)
-{
-	if (*pf > 255.0f)
-		*pf = 255.0f;
-	if (*pf < 0.0f)
-		*pf = 0.0f;
-}
 
-void	clamp(t_FTMFLOAT4 *c)
+t_FTMFLOAT4	trace_ray(const t_ray *ray, const t_hit hit)
 {
-	clamp_channel(&c->data[0]);
-	clamp_channel(&c->data[1]);
-	clamp_channel(&c->data[2]);
-	clamp_channel(&c->data[3]);
-}
+	const t_FTMFLOAT4	base_color = {0.0f, 0.0f, 0.0f, 0.0f};
+	const t_material	*m = &((t_plane *)(hit.pobj->obj_ptr))->m;
+	t_FTMFLOAT4			result;
 
-t_FTMFLOAT4	vmult(t_FTMFLOAT4 *v, float m)
-{
-	return (ftmf4_set_vector(v->data[0] * m, v->data[1] * m,
-			v->data[2] * m, v->data[3]));
+	if (hit.pobj == NULL)
+		return (base_color);
+	result = vmult(&(m->amb_color), m->ka);
+	// TODO : Diffuse
+	// TODO : Specular
+	// TODO : shadow
+	clamp(&result);
+	return (result);
 }

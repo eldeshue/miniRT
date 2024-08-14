@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:25:24 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 15:47:58 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,13 @@
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
+# define SAMPLING_LEVEL 1.0f
 
 # include "../ft_graphics/ft_graphics.h"
 # include "../ft_vector/ft_vector.h"
+
+# include "../ray/ray.h"
+# include "../hit/hit.h"
 
 /*
 	ftmlx	: mlx object
@@ -48,16 +52,17 @@ t_render_resource	*new_render_resource(void);
 int					init_render_resource(t_render_resource *self, char **argv);
 void				delete_render_resource(t_render_resource *self);
 void				set_view_plane(t_render_resource *const prsrc);
+t_FTMFLOAT4			trace_ray(const t_ray *ray, const t_hit hit);
 
 // render
-// TODO : rendering window
+void				render_rt_window(t_render_resource *const prsrc);
 // TODO : rendering image
 
 // mlx hook
 void				set_rt_hook(t_FTMLX *pmlx);
 
 // etc
-float				clamp(float f);
+void				clamp(t_FTMFLOAT4 *c);
 t_FTMFLOAT4			vmult(t_FTMFLOAT4 *v, float m);
 
 #endif

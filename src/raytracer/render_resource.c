@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:14:41 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:25:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 14:33:55 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ t_render_resource	*new_render_resource(void)
 	if (self->view_plane == NULL || self->lights == NULL
 		|| self->render_objects == NULL)
 		return (NULL);
+	set_view_plane(self);
+	return (self);
 }
 
 void	delete_render_resource(t_render_resource *self)
