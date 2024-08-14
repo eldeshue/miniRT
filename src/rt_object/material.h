@@ -1,24 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   light.h                                            :+:      :+:    :+:   */
+/*   material.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:44 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 11:16:03 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/05 12:42:38 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:28:16 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef LIGHT_H
-# define LIGHT_H
+#ifndef MATERIAL_H
+# define MATERIAL_H
 
-# include "./ft_graphics/ft_math/ft_math.h"
+# include "../ft_graphics/ft_math/ft_math.h"
 
-typedef struct s_light
+typedef struct s_material
 {
-	t_FTMFLOAT4	ppos;
-	t_FTMFLOAT4	color;
-}				t_light;
+	t_FTMFLOAT4	amb_color;
+	float		ka;
+	float		kd;
+	float		ks;
+	float		specular_pow;
+}				t_material;
 
 #endif

@@ -1,27 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   material.h                                         :+:      :+:    :+:   */
+/*   light.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 12:42:38 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/05 14:06:33 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/09 18:17:59 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/09 20:24:13 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef MATERIAL_H
-# define MATERIAL_H
+#include "../light/light.h"
+#include <stdlib.h>
 
-# include "./ft_graphics/ft_math/ft_math.h"
-
-typedef struct s_material
+int	alloc_light(void *paddr, void *plight)
 {
-	t_FTMFLOAT4	amb_color;
-	float		ka;
-	float		kd;
-	float		ks;
-	float		specular_pow;
-}				t_material;
+	t_light *const	param = plight;
 
-#endif
+	*(t_light **)paddr = malloc(sizeof(t_light));
+	if (*(t_light **)paddr == NULL)
+		return (0);
+	**(t_light **)paddr = *param;
+	return (1);
+}
+
+void	free_light(void *paddr)
+{
+	free(*(t_light **)paddr);
+}
