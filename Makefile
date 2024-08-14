@@ -7,9 +7,19 @@ LDFLAGS = -lm -L. -lmlx -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./
 # target rule
 NAME = minirt
 
-srcs =
+srcs = ./src/light/light.c \
+./src/main.c \
+./src/raytracer/init_resource.c \
+./src/raytracer/render_image.c \
+./src/raytracer/render_resource.c \
+./src/raytracer/render_window.c \
+./src/raytracer/set_rt_hook.c \
+./src/raytracer/trace_ray.c \
+./src/raytracer/utility.c \
+./src/raytracer/view_plane.c \
+./src/rt_object/rt_geo.c \
+./src/rt_object/rt_obj.c \
 
-srcs := $(addprefix src/, $(srcs))
 OBJS := $(srcs:.c=.o)
 
 # path
@@ -47,39 +57,19 @@ $(NAME): $(OBJS)
 	if ! [ -f "./libmlx.dylib" ]; then \
 		mv ./src/libmlx.dylib ./; \
 	fi
-	@echo "$(CLEAR_LINE)	[ $(SKYBLUE)$(NAME) $(RESET)] $(GREEN)created$(RESET)"
 	@$(CC) $(LDFLAGS) $(OBJS) -o $@
-	@echo "\n How to run $(SKYBLUE)$(NAME)"
-	@echo "\n	$(SKYBLUE)./$(NAME)$(RESET)"
-
-# 추후 libft 추가 후 사용
-# $(LIBFT):
-# 	@make -C libft
-# 	@mkdir -p libs
-# 	@cp libft/libft.a libs/
-
 
 %.o : %.c
-	@printf "$(CLEAR_LINE)			$(BLUE)~~ $(RESET)Making object for $(SKYBLUE)(miniRT) $(BLUE)~~$(RESET)\n"
-	@printf "$(CLEAR_LINE)		$(BLUE)~~$(RESET) $(RESET) Making $(YELLOW)$@$(RESET) from $(YELLOW)$<$(RESET) $(BLUE)~~$(RESET)$(MOVE_UP)"
 	@$(CC) $(CFLAGS) -c $< -o $@
 
 clean:
-	@sleep 0.5
-	@echo "$(CLEAR_LINE)		$(YELLOW)~~$(RED)Cleaing Object files $(YELLOW)~~$(RESET)\n$(MOVE_DOWN)"
+
 	$(MAKE) -C $(FT_GRAPHICS_DIR) clean
 	$(MAKE) -C $(FT_STRING_DIR) clean
 	$(MAKE) -C $(FT_VECTOR_DIR) clean
 	$(MAKE) -C $(LIBFT_DIR) clean
 	@rm -f $(OBJS)
-	@sleep 0.1
-	@echo "$(CLEAR_LINE)		$(RED)Removing Object files.$(RESET)"
-	@sleep 0.2
-	@echo "$(MOVE_UP)$(CLEAR_LINE)		$(RED)Removing Object files..$(RESET)"
-	@sleep 0.1
-	@echo "$(MOVE_UP)$(CLEAR_LINE)		$(RED)Removing Object files...$(RESET)"
-	@sleep 0.1
-	@echo "$(MOVE_UP)$(CLEAR_LINE)		$(YELLOW)Object files$(RESET) $(RED)removed$(RESET)$(MOVE_DOWN)"
+
 
 fclean: clean
 	if [ -f "./libmlx.dylib" ]; then \
@@ -90,8 +80,6 @@ fclean: clean
 	$(MAKE) -C $(FT_VECTOR_DIR) fclean
 	$(MAKE) -C $(LIBFT_DIR) fclean
 	@rm -f $(NAME)
-	@sleep 0.5
-	@echo "$(CLEAR_LINE)		[ $(SKYBLUE)$(NAME) $(RESET)] $(RED)removed$(RESET)"
 
 re: fclean all
 

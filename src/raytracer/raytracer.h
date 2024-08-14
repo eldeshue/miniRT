@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 15:47:58 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 16:39:21 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ t_render_resource	*new_render_resource(void);
 int					init_render_resource(t_render_resource *self, char **argv);
 void				delete_render_resource(t_render_resource *self);
 void				set_view_plane(t_render_resource *const prsrc);
-t_FTMFLOAT4			trace_ray(const t_ray *ray, const t_hit hit);
+t_FTMFLOAT4			trace_ray(const t_ray *ray, t_hit hit);
 
 // render
 void				render_rt_window(t_render_resource *const prsrc);

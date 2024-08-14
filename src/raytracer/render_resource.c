@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_resource.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:14:41 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 14:33:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 16:54:49 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_render_resource	*new_render_resource(void)
 		= malloc(SCREEN_HEIGHT * SCREEN_WIDTH * sizeof(t_FTMFLOAT4));
 	self->lights = new_ftvec(alloc_light, free_light, sizeof(t_light *));
 	self->render_objects
-		= new_ft_vec(alloc_rt_obj, free_rt_obj, sizeof(t_rt_obj *));
+		= new_ftvec(alloc_rt_obj, free_rt_obj, sizeof(t_rt_obj *));
 	if (self->view_plane == NULL || self->lights == NULL
 		|| self->render_objects == NULL)
 		return (NULL);

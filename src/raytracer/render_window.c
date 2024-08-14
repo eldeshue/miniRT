@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 14:56:03 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 16:56:11 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 static t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 								t_ray *const pgaze)
 {
-	int			idx;
+	size_t		idx;
 	t_hit		result;
 	t_hit		cur_hit;
 	t_rt_obj	*pobj;
