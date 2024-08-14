@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:25:24 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 12:56:23 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
+# define SAMPLING_LEVEL 1
 
 # include "../ft_graphics/ft_graphics.h"
 # include "../ft_vector/ft_vector.h"
@@ -50,7 +51,7 @@ void				delete_render_resource(t_render_resource *self);
 void				set_view_plane(t_render_resource *const prsrc);
 
 // render
-// TODO : rendering window
+void				render_rt_window(t_render_resource *const prsrc);
 // TODO : rendering image
 
 // mlx hook
