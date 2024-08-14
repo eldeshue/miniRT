@@ -1,27 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   hit.h                                              :+:      :+:    :+:   */
+/*   colliders.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 11:01:50 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 11:24:12 by hyeonwch         ###   ########.fr       */
+/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/14 11:30:09 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HIT_H
-# define HIT_H
+#ifndef COLLIDERS_H
+# define COLLIDERS_H
 
-# include "../ft_graphics/ft_math/ft_math.h"
-# include "../rt_object/rt_object.h"
+# include "rt_object.h"
 
-typedef struct s_hit
-{
-	float		dist;
-	t_FTMFLOAT4	ppos;
-	t_FTMFLOAT4	vnormal;
-	t_rt_obj	*pobj;
-}				t_hit;
-
+t_hit		collider_plane(const t_ray *r, void *obj);
+t_hit		collider_sphere(const t_ray *r, void *obj);
+t_hit		collider_cylinder(const t_ray *r, void *obj);
+t_hit		collider_cone(const t_ray *r, void *obj);
+t_FTMFLOAT4	ray_at(const t_ray *ray, float t);
 #endif
