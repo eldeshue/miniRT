@@ -6,22 +6,26 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 19:25:59 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/08 13:14:36 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 15:50:10 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 
-float	clamp(float f)
+static void	clamp_channel(float *pf)
 {
-	float	result;
+	if (*pf > 255.0f)
+		*pf = 255.0f;
+	if (*pf < 0.0f)
+		*pf = 0.0f;
+}
 
-	result = f;
-	if (f > 255.0f)
-		result = 255.0f;
-	if (f < 0.0f)
-		result = 0.0f;
-	return (result);
+void	clamp(t_FTMFLOAT4 *c)
+{
+	clamp_channel(&c->data[0]);
+	clamp_channel(&c->data[1]);
+	clamp_channel(&c->data[2]);
+	clamp_channel(&c->data[3]);
 }
 
 t_FTMFLOAT4	vmult(t_FTMFLOAT4 *v, float m)
