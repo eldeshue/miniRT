@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:21:43 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:32:07 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 18:31:53 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,6 @@ int	main(int argc, char *argv[])
 	if (argc == 3)
 		;// render image
 	else
-		;// render window
+		render_rt_window(prsrc);
 	delete_render_resource(prsrc);
 }

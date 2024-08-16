@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_object.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:22:32 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/14 16:53:22 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,13 @@ typedef struct s_obj_desc
 }				t_obj_desc;
 
 // parent class
+typedef struct s_hit
+{
+	float			dist;
+	t_FTMFLOAT4		ppos;
+	t_FTMFLOAT4		vnormal;
+	void	*pobj;
+}					t_hit;
 typedef t_hit(*t_hptr)(const t_ray *r, void *obj_ptr);
 typedef struct s_rt_obj
 {
