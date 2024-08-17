@@ -1,47 +1,38 @@
 #include "colliders.h"
-#include "ft_math.h"
-#include "raytracer.h"
 #include "collider_obj_vars.h"
+#include <math.h>
 
-/**
- * type: plane
-typedef struct s_plane
+void plane_coll_set_vars(t_plane_coll_vars *vars, t_FTMFLOAT4 p0_minus_o, t_FTMFLOAT4 ndir, t_FTMFLOAT4 vnormal)
 {
-	t_material	m; // material
-	t_FTMFLOAT4	pcenter; // center point
-	t_FTMFLOAT4	vnormal; // normal vector
-}				t_plane;
-typedef struct s_ray
-{
-	t_FTMFLOAT4	pstart;
-	t_FTMFLOAT4	ndir;
-}				t_ray;
-*/
+    vars->denom = ftmf4_vdot(vnormal, ndir);
+    if (fabs(vars->denom) > EPSILON) // 교차 가능성 있음
+        vars->t = ftmf4_vdot(vnormal, p0_minus_o) / vars->denom;
+    else
+        vars->t = -1.0; // 평행하여 교차하지 않음
+}
 
-
-t_hit		collider_plane(const t_ray *r, void *obj)
+void	plane_coll_set_hit(t_hit *hit, t_ray *r, t_plane *plane, t_plane_coll_vars vars, void *obj)
 {
-	t_plane		*plane;
-	t_FTMFLOAT4	oc;
-	t_FTMFLOAT4	ndir;
-	float		denom;
-	float		t;
-	t_hit	hit;
+	hit->dist = vars.t;
+	hit->ppos = ray_at(r, vars.t);
+	hit->vnormal = plane->vnormal;
+	hit->pobj = obj;
+}
+
+t_hit	collider_plane(const t_ray *r, void *obj)
+{
+	t_plane				*plane;
+	t_hit				hit; // 충돌 정보를 저장할 구조체
+	t_FTMFLOAT4			p0_minus_o; // 평면의 중심과 광선 시작점 사이의 벡터
+	t_plane_coll_vars	vars; // 평면 충돌 계산에 사용되는 변수들
 
 	plane = (t_plane *)obj;
-	oc = ftmf4_vsub(plane->pcenter, r->pstart);
-	ndir = *ftmf4_vnormalize(&plane->vnormal);
-	denom = ftmf4_vdot(ndir, r->ndir);
-	if (fabs(denom) > 0.0001)
-	{
-		t = ftmf4_qdot(oc, ndir) / denom;
-		if (t > 0)
-		{
-			hit.dist = t;
-			hit.ppos = ray_at(r, t);
-			hit.vnormal = plane->vnormal;
-			hit.pobj = obj;
-		}
-	}
+	p0_minus_o = ftmf4_qsub(plane->pcenter, r->pstart);
+	plane_coll_set_vars(&vars, p0_minus_o, r->ndir, plane->vnormal);
+	if (vars.t < 0)
+		hit.dist = -1.0; // 교차점이 유효하지 않은 경우
+	else
+		plane_coll_set_hit(&hit, (t_ray *)r, plane, vars, obj);
 	return (hit);
 }
+

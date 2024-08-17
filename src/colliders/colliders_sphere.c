@@ -1,48 +1,46 @@
 #include "colliders.h"
-#include "ft_math.h"
-#include "raytracer.h"
 #include "collider_obj_vars.h"
+#include <math.h>
+#include <stdio.h>
 
 void	sphere_coll_set_vars(t_shpere_coll_vars *vars, t_FTMFLOAT4 oc, t_FTMFLOAT4 ndir, float radius)
 {
 	vars->a = ftmf4_qsize(ndir);
-	vars->b = 2.0 * ftmf4_qsize(vmult(&ndir, ftmf4_qdot(oc, ndir)));
+	vars->b = 2.0 * ftmf4_vdot(oc, ndir);
 	vars->c = ftmf4_qsize(oc) - radius * radius;
 	vars->discriminant = vars->b * vars->b - 4 * vars->a * vars->c;
 }
 
-float	find_intersection_time(float t1, float t2)
+float find_intersection_time(float t1, float t2)
 {
-	if (t1 > 0 && t2 > 0)  // 둘 다 양수인 경우
-	{
-		if (t1 < t2)
-			return (t1);  // 가까운 지점 반환
-		else
-			return (t2);  // 가까운 지점 반환
-	}
-	else if ((t1 < 0 && t2 > 0) || (t1 > 0 && t2 < 0))  // 하나는 음수, 하나는 양수인 경우
-	{
-		if (t1 < 0)
-			return (t2);  // 양수인 지점 반환
-		else
-			return (t1);  // 양수인 지점 반환
-	}
-	else  // 둘 다 음수인 경우
-	{
-		if (fabs(t1) < fabs(t2))
-			return (t1);  // 가까운 지점 반환
-		else
-			return (t2);  // 가까운 지점 반환
-	}
+    if (t1 > EPSILON && t2 > EPSILON)
+        return fmin(t1, t2); // 두 지점 중 가까운 지점 선택
+    else if (t1 > EPSILON)
+        return t1; // 양수인 값 선택
+    else if (t2 > EPSILON)
+        return t2; // 양수인 값 선택
+    else
+        return -1.0; // 교차점이 없다고 판단
 }
 
-void	sphere_coll_compute_t(t_shpere_coll_vars *vars)
+void sphere_coll_compute_t(t_shpere_coll_vars *vars)
 {
-	vars->sqrt_disc = sqrt(vars->discriminant);
-	vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
-	vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
-	vars->t = find_intersection_time(vars->t1, vars->t2);
+    if (vars->discriminant < 0)
+    {
+        vars->t = -1.0; // 교차점이 없는 경우
+    }
+    else
+    {
+        vars->sqrt_disc = sqrt(vars->discriminant);
+        vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
+        vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
+		printf("t1: %f, t2: %f\n", vars->t1, vars->t2);
+        // t1과 t2가 구와의 교차점
+        // 근이 2개일 경우, 양수이고 더 작은 값을 반환하여 가장 가까운 교차점을 선택
+        vars->t = find_intersection_time(vars->t1, vars->t2);
+    }
 }
+
 
 void	sphere_coll_set_hit(t_hit *hit, t_ray *r, t_sphere *sphere, t_shpere_coll_vars vars, void *obj)
 {
@@ -73,7 +71,7 @@ t_hit collider_sphere(const t_ray *r, void *obj)
 		if (vars.t == -1.0)
 			hit.dist = -1.0;
 		else
-			sphere_coll_set_hit(&hit, r, sphere, vars, obj);
+			sphere_coll_set_hit(&hit, (t_ray *)r, sphere, vars, obj);
 	}
 	return (hit);
 }

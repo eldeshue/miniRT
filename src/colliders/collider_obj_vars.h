@@ -30,4 +30,19 @@ typedef struct s_sphere_coll_vars
 	float	t;
 }	t_shpere_coll_vars;
 
+/**
+ * t_plane_coll_vars 구조체
+ *
+ * 이 구조체는 광선과 평면의 충돌 계산에서 사용되는 변수들을 저장합니다.
+ * 광선(ray)과 평면(plane)의 교차 여부를 계산하고 교차 시 교차 지점을 찾기 위해 필요한 변수들이 포함됩니다.
+ *
+ * @param denom 평면의 방정식에서 광선의 방향벡터와 평면의 법선벡터의 내적값
+ * @param t     광선과 평면이 교차하는 지점을 나타내는 값
+ */
+typedef struct s_plane_coll_vars
+{
+	float	denom;
+	float	t;
+}	t_plane_coll_vars;
+
 #endif
