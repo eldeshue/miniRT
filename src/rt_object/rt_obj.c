@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 18:26:35 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:21:41 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/18 16:12:23 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static int	per_type_init(t_rt_obj *pobj, t_obj_desc *pobj_desc)
 {
 	if (pobj_desc->type == error)
 		return (0);
+	pobj++;	// tmp
+/*
 	else if (pobj_desc->type == sphere)
 	{
 		pobj->obj_ptr = new_sphere(pobj_desc);
@@ -38,13 +40,13 @@ static int	per_type_init(t_rt_obj *pobj, t_obj_desc *pobj_desc)
 		pobj->obj_ptr = new_cone(pobj_desc);
 		pobj->hit = collider_cone;
 	}
+*/
 	return (1);
 }
 
 int	alloc_rt_obj(void *paddr, void *pobj_desc)
 {
 	t_rt_obj **const	address = paddr;
-	t_obj_desc *const	param = pobj_desc;
 
 	*address = malloc(sizeof(t_rt_obj));
 	if (*address == NULL)
