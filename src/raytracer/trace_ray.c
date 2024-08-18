@@ -6,14 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:07:22 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/18 16:12:16 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/18 17:27:20 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include "../ray/ray.h"
-#include "../hit/hit.h"
-
 
 t_FTMFLOAT4	trace_ray(const t_ray *ray, const t_hit hit)
 {

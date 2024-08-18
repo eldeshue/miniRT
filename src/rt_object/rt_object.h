@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/18 15:51:30 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/18 17:26:45 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define RT_OBJECT_H
 
 # include "../ft_graphics/ft_math/ft_math.h"
-# include "../hit/hit.h"
 # include "../ray/ray.h"
 # include "../rt_object/material.h"
 

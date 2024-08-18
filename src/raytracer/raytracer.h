@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 16:39:21 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/18 17:26:29 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # include "../ft_vector/ft_vector.h"
 
 # include "../ray/ray.h"
-# include "../hit/hit.h"
+# include "../rt_object/rt_object.h"
 
 /*
 	ftmlx	: mlx object
