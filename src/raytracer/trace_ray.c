@@ -6,14 +6,14 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:07:22 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/20 15:33:54 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/20 15:49:48 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include "../ray/ray.h"
 
-t_FTMFLOAT4	trace_ray(const t_ray *ray, const t_hit hit)
+t_FTMFLOAT4	trace_ray(const t_ray *ray, t_hit hit)
 {
 	const t_FTMFLOAT4	base_color = {0.0f, 0.0f, 0.0f, 0.0f};
 	t_material *const	m = &((t_plane *)(((t_rt_obj *)hit.pobj)->obj_ptr))->m;
