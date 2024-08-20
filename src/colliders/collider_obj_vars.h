@@ -6,12 +6,12 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:18 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/20 15:48:12 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/20 17:26:17 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_OBJ_VARS_H
-# define COLLIDERS_OBJ_VARS_H
+#ifndef COLLIDER_OBJ_VARS_H
+# define COLLIDER_OBJ_VARS_H
 
 # include "colliders.h"
 

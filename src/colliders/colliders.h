@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/17 18:25:06 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/20 17:23:03 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 # define COLLIDERS_H
 
 # include "../rt_object/rt_object.h"
-#include "../ft_graphics/ft_math/ft_math.h"
-#include "../raytracer/raytracer.h"
+# include "../ft_graphics/ft_math/ft_math.h"
+# include "../raytracer/raytracer.h"
 # define EPSILON 1e-6
 
 
