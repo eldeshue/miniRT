@@ -1,25 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   colliders.h                                        :+:      :+:    :+:   */
+/*   clliders_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:23:08 by dogwak           ###   ########.fr       */
+/*   Created: 2024/08/20 15:30:09 by dogwak            #+#    #+#             */
+/*   Updated: 2024/08/20 15:32:03 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef COLLIDERS_H
-# define COLLIDERS_H
+#include "colliders.h"
+#include "../raytracer/raytracer.h"
 
-# include "../rt_object/rt_object.h"
-
-t_hit	collider_plane(const t_ray *r, void *obj);
-t_hit	collider_square(const t_ray *r, void *obj);
-t_hit	collider_triangle(const t_ray *r, void *obj);
-t_hit	collider_sphere(const t_ray *r, void *obj);
-t_hit	collider_cylinder(const t_ray *r, void *obj);
-t_hit	collider_cone(const t_ray *r, void *obj);
-
-#endif
+t_FTMFLOAT4 ray_at(t_ray *ray, float t)
+{
+	return (ftmf4_qadd(ray->pstart, vmult(&ray->ndir, t)));
+}

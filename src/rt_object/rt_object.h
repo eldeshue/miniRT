@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/18 17:26:45 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/20 15:25:34 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_hit
 }					t_hit;
 
 typedef t_hit(*t_hptr)(const t_ray *r, void *obj_ptr);
+
 typedef struct s_rt_obj
 {
 	t_obj_type	type;
