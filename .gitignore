@@ -58,3 +58,8 @@ dkms.conf
 miniRT
 
 # testfolder
+
+# swift files
+*.swiftsourceinfo
+*.swiftdoc
+*.swiftmodule

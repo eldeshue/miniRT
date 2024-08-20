@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   rt_object.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:01:57 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/17 16:52:11 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/20 15:50:50 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 # define RT_OBJECT_H
 
 # include "../ft_graphics/ft_math/ft_math.h"
-# include "../hit/hit.h"
 # include "../ray/ray.h"
 # include "../rt_object/material.h"
 
@@ -45,7 +44,7 @@ typedef struct s_hit
 	float			dist;
 	t_FTMFLOAT4		ppos;
 	t_FTMFLOAT4		vnormal;
-	void	*pobj;
+	void			*pobj;
 }					t_hit;
 
 typedef t_hit(*t_hptr)(const t_ray *r, void *obj_ptr);
