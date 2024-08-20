@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:21:43 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 18:31:53 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/17 18:25:30 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	main(int argc, char *argv[])
 		write(2, "resource object allocation fail.\n", 33);
 		return (0);
 	}
-	if (!init_render_resource(prsrc, argv))
-	{
-		write(2, "parsing failed.\n", 16);
-		return (0);
-	}
+	// if (!init_render_resource(prsrc, argv))
+	// {
+	// 	write(2, "parsing failed.\n", 16);
+	// 	return (0);
+	// }
 	set_rt_hook(&prsrc->ftmlx);
 	if (argc == 3)
 		;// render image
