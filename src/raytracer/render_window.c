@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/18 17:27:03 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 17:26:28 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,11 @@ void	render_rt_window(t_render_resource *const prsrc)
 	int			r;
 	int			c;
 
-	r = 0;
-	while (r < prsrc->ftmlx.view_height)
+	r = -1;
+	while (++r < prsrc->ftmlx.view_height)
 	{
-		c = 0;
-		while (c < prsrc->ftmlx.view_width)
+		c = -1;
+		while (++c < prsrc->ftmlx.view_width)
 		{
 			ft_render_pixel(&prsrc->ftmlx.rdr_tgt_img, c, r,
 				get_color_pixel(prsrc, r, c));
