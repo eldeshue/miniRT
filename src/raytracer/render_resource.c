@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_resource.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:14:41 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/14 16:54:49 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/21 17:30:27 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ t_render_resource	*new_render_resource(void)
 	if (self->view_plane == NULL || self->lights == NULL
 		|| self->render_objects == NULL)
 		return (NULL);
-	set_view_plane(self);
 	return (self);
 }
 
