@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:07:22 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 17:23:53 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 17:57:20 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ t_FTMFLOAT4	trace_ray(const t_ray *ray, t_hit hit)
 	if (hit.pobj == NULL)
 		return (base_color);
 	pm = &(((t_plane *)(hit.pobj))->m);
-	result = vmult(&(pm->obj_color), pm->ka);
+	result = pm->obj_color;
 	ray++;	// tmp
 	// TODO : Diffuse
 	// TODO : Specular

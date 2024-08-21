@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:39:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 17:39:12 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 17:58:52 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ int	init_render_resource(t_render_resource *self, char **argv)
 	//
 	argv++;
 
-/*
 	// test code
 	// camera init
 	self->fov = 90;
@@ -56,7 +55,6 @@ int	init_render_resource(t_render_resource *self, char **argv)
 	l.color = ftmf4_set_vector(255.0f, 255.0f, 255.0f, 0.0f);
 	l.intensity = 0.6f;
 	self->lights->push_back(self->lights, &l);
-*/
 
 	set_view_plane(self);	// call set_view_plane after camera initialization.
 	return (1);
