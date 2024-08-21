@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 17:26:28 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 17:28:11 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ static t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 	result.pobj = NULL;
 	while (++idx < prsrc->render_objects->size)
 	{
-		pobj = prsrc->render_objects->at(prsrc->render_objects, idx);
+		pobj = *((t_rt_obj **)prsrc->render_objects
+				->at(prsrc->render_objects, idx));
 		cur_hit = pobj->hit(pgaze, pobj->obj_ptr);
 		if (cur_hit.dist > 0 && cur_hit.dist < result.dist)
 			result = cur_hit;
