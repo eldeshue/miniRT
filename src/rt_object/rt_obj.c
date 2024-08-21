@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 18:26:35 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/20 15:50:38 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 18:05:37 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static int	per_type_init(t_rt_obj *pobj, t_obj_desc *pobj_desc)
 {
 	if (pobj_desc->type == error)
 		return (0);
-	pobj++;	// tmp
-/*
 	else if (pobj_desc->type == sphere)
 	{
 		pobj->obj_ptr = new_sphere(pobj_desc);
@@ -30,6 +28,7 @@ static int	per_type_init(t_rt_obj *pobj, t_obj_desc *pobj_desc)
 		pobj->obj_ptr = new_plane(pobj_desc);
 		pobj->hit = collider_plane;
 	}
+/*
 	else if (pobj_desc->type == cylinder)
 	{
 		pobj->obj_ptr = new_cylinder(pobj_desc);
