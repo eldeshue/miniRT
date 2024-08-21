@@ -6,13 +6,15 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/18 17:27:03 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 18:06:11 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include "../ray/ray.h"
 #include "../ft_graphics/ft_math/ft_math.h"
+
+#include <stdio.h>
 
 static t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 								t_ray *const pgaze)
@@ -27,7 +29,8 @@ static t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 	result.pobj = NULL;
 	while (++idx < prsrc->render_objects->size)
 	{
-		pobj = prsrc->render_objects->at(prsrc->render_objects, idx);
+		pobj = *((t_rt_obj **)prsrc->render_objects
+				->at(prsrc->render_objects, idx));
 		cur_hit = pobj->hit(pgaze, pobj->obj_ptr);
 		if (cur_hit.dist > 0 && cur_hit.dist < result.dist)
 			result = cur_hit;
@@ -65,11 +68,11 @@ void	render_rt_window(t_render_resource *const prsrc)
 	int			r;
 	int			c;
 
-	r = 0;
-	while (r < prsrc->ftmlx.view_height)
+	r = -1;
+	while (++r < prsrc->ftmlx.view_height)
 	{
-		c = 0;
-		while (c < prsrc->ftmlx.view_width)
+		c = -1;
+		while (++c < prsrc->ftmlx.view_width)
 		{
 			ft_render_pixel(&prsrc->ftmlx.rdr_tgt_img, c, r,
 				get_color_pixel(prsrc, r, c));

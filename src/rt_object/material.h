@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 12:42:38 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:28:16 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 17:23:53 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 
 typedef struct s_material
 {
-	t_FTMFLOAT4	amb_color;
+	t_FTMFLOAT4	obj_color;
 	float		ka;
 	float		kd;
 	float		ks;
