@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:39:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 17:58:52 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 17:47:06 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,10 @@ int	init_render_resource(t_render_resource *self, char **argv)
 	self->cam.vtarget = ftmf4_set_vector(1.0f, 0.0f, -0.3f, 0.0f);
 	ftmf4_vnormalize(&self->cam.vtarget);
 	self->cam.vup = ftmf4_set_vector(0.0f, 0.0f, 1.0f, 0.0f);
+
+	// global ambient color setting
+	self->amb_color = ftmf4_set_vector(255.0f, 255.0f, 255.0f, 0.0f);
+	self->amb_intens = 0.3;
 
 	// object init
 	t_obj_desc	tmp;
