@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/22 18:02:42 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 20:30:06 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 						* (cos_angle[0] + powf(cos_angle[1], SPECULAR_POWER))));
 		}
 	}
+	clamp(&result);
 	return (result);
 }
 
@@ -68,7 +69,6 @@ t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc,
 
 	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
 	result = ftmf4_vadd(result, light_sum(prsrc, ray, &hit));
-	clamp(&result);
 	result.data[0] = result.data[0] * pm->obj_color.data[0] / 255.0f;
 	result.data[1] = result.data[1] * pm->obj_color.data[1] / 255.0f;
 	result.data[2] = result.data[2] * pm->obj_color.data[2] / 255.0f;
