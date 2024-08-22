@@ -6,27 +6,23 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:07:22 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 17:57:20 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 15:59:36 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include "../ray/ray.h"
 
-t_FTMFLOAT4	trace_ray(const t_ray *ray, t_hit hit)
+t_FTMFLOAT4	trace_ray(t_render_resource const *prsrc,
+							const t_ray *ray, t_hit hit)
 {
 	const t_FTMFLOAT4	base_color = {0.0f, 0.0f, 0.0f, 0.0f};
-	t_material 			*pm;
-	t_FTMFLOAT4			result;
 
-	if (hit.pobj == NULL)
+	if (hit.pobj != NULL)
+	{
+		// phong reflection
+		return (reflect_ray(prsrc, ray, hit));
+	}
+	else
 		return (base_color);
-	pm = &(((t_plane *)(hit.pobj))->m);
-	result = pm->obj_color;
-	ray++;	// tmp
-	// TODO : Diffuse
-	// TODO : Specular
-	// TODO : shadow
-	clamp(&result);
-	return (result);
 }
