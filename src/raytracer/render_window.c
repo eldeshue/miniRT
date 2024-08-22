@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 18:06:11 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 12:22:58 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 #include <stdio.h>
 
-static t_hit	get_hit_per_ray(t_render_resource *const prsrc,
+t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 								t_ray *const pgaze)
 {
 	size_t		idx;
@@ -55,7 +55,7 @@ static t_FTCOLOR	get_color_pixel(t_render_resource *const prsrc,
 			prsrc->view_plane[row * prsrc->ftmlx.view_width + col],
 			prsrc->cam.vpos);
 	ftmf4_vnormalize(&gaze.ndir);
-	color = trace_ray(&gaze, get_hit_per_ray(prsrc, &gaze));
+	color = trace_ray(prsrc, &gaze, get_hit_per_ray(prsrc, &gaze));
 	result_color.r = color.data[0];
 	result_color.g = color.data[1];
 	result_color.b = color.data[2];
