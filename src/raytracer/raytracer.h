@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/18 17:26:29 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 17:39:40 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define SAMPLING_LEVEL 1.0f
+# define SPECULAR_POWER 4
 
 # include "../ft_graphics/ft_graphics.h"
 # include "../ft_vector/ft_vector.h"
@@ -52,7 +53,10 @@ t_render_resource	*new_render_resource(void);
 int					init_render_resource(t_render_resource *self, char **argv);
 void				delete_render_resource(t_render_resource *self);
 void				set_view_plane(t_render_resource *const prsrc);
-t_FTMFLOAT4			trace_ray(const t_ray *ray, t_hit hit);
+t_hit				get_hit_per_ray(t_render_resource *const prsrc,
+						t_ray *const pgaze);
+t_FTMFLOAT4			trace_ray(t_render_resource const *prsrc,
+						const t_ray *ray, t_hit hit);
 
 // render
 void				render_rt_window(t_render_resource *const prsrc);
@@ -60,6 +64,10 @@ void				render_rt_window(t_render_resource *const prsrc);
 
 // mlx hook
 void				set_rt_hook(t_FTMLX *pmlx);
+
+// reflect : phong reflection model
+t_FTMFLOAT4			reflect_ray(t_render_resource const *prsrc,
+						const t_ray *ray, t_hit hit);
 
 // etc
 void				clamp(t_FTMFLOAT4 *c);

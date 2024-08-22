@@ -6,37 +6,57 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/22 12:24:47 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 17:40:55 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./raytracer.h"
+#include "../light/light.h"
+#include <math.h>
 
 // check shadow
-static int	is_shadowed(t_render_resource const *prsrc, const t_hit *hit)
+static int	is_shadowed(t_render_resource const *prsrc,
+							t_ray const *pray_to_light)
 {
-	// creat ray toward light source
+	return (get_hit_per_ray(prsrc, pray_to_light).pobj != NULL);
+}
 
-	// check collision, hit per ray
+static t_FTMFLOAT4	reflect_vector(float angle, const t_FTMFLOAT4 v,
+									const t_FTMFLOAT4 s)
+{
+	const t_FTMFLOAT4	common = vmult(&s, angle);
+	const t_FTMFLOAT4	not_common = ftmf4_vadd(v, common);
 
-	// return bool value
+	return (ftmf4_vadd(common, not_common));
 }
 
 static t_FTMFLOAT4	light_sum(t_render_resource const *prsrc,
-								const t_ray *ray, const t_hit *hit)
+								const t_ray *ray, const t_hit *phit)
 {
+	t_FTMFLOAT4	result;
+	t_ray		ray_to_light;
+	t_light		*pl;
 	size_t		idx;
+	float		cos_angle[2];
 
+	result = ftmf4_set_vector(0.0f, 0.0f, 0.0f, 0.0f);
 	idx = -1;
 	while (++idx < prsrc->lights->size)
 	{
-		// check shadow
-		if (!is_shadowed(prsrc, hit))
+		pl = *((t_light **)prsrc->lights->at(prsrc->lights, idx));
+		ray_to_light.pstart = phit->ppos;
+		ray_to_light.ndir = ftmf4_vsub(pl->ppos, phit->ppos);
+		ftmf4_vnormalize(&ray_to_light.ndir);
+		if (!is_shadowed(prsrc, &ray_to_light))
 		{
-			// diffusion
-			// specular
+			cos_angle[0] = ftmf4_vdot(vmult(&ray->ndir, -1.0f), phit->vnormal);
+			cos_angle[1] = ftmf4_vdot(reflect_vector(cos_angle[0], ray->ndir,
+						phit->vnormal), ray_to_light.ndir);
+			result = ftmf4_vadd(result, vmult(&pl->color, pl->intensity
+						* (cos_angle[0] + powf(cos_angle[1], SPECULAR_POWER))));
 		}
 	}
+	return (result);
 }
 
 // reflect
@@ -48,5 +68,9 @@ t_FTMFLOAT4	reflect_ray(t_render_resource const *prsrc,
 
 	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
 	result = ftmf4_vadd(result, light_sum(prsrc, ray, &hit));
-	// absorb and reflect
+	clamp(&result);
+	result.data[0] = result.data[0] * pm->obj_color.data[0] / 255.0f;
+	result.data[1] = result.data[1] * pm->obj_color.data[1] / 255.0f;
+	result.data[2] = result.data[2] * pm->obj_color.data[2] / 255.0f;
+	return (result);
 }
