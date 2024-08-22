@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/22 17:40:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/22 18:02:42 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,14 +15,14 @@
 #include <math.h>
 
 // check shadow
-static int	is_shadowed(t_render_resource const *prsrc,
-							t_ray const *pray_to_light)
+static int	is_shadowed(t_render_resource *prsrc,
+							t_ray *pray_to_light)
 {
 	return (get_hit_per_ray(prsrc, pray_to_light).pobj != NULL);
 }
 
-static t_FTMFLOAT4	reflect_vector(float angle, const t_FTMFLOAT4 v,
-									const t_FTMFLOAT4 s)
+static t_FTMFLOAT4	reflect_vector(float angle, t_FTMFLOAT4 v,
+									t_FTMFLOAT4 s)
 {
 	const t_FTMFLOAT4	common = vmult(&s, angle);
 	const t_FTMFLOAT4	not_common = ftmf4_vadd(v, common);
@@ -30,8 +30,8 @@ static t_FTMFLOAT4	reflect_vector(float angle, const t_FTMFLOAT4 v,
 	return (ftmf4_vadd(common, not_common));
 }
 
-static t_FTMFLOAT4	light_sum(t_render_resource const *prsrc,
-								const t_ray *ray, const t_hit *phit)
+static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
+								t_ray *ray, const t_hit *phit)
 {
 	t_FTMFLOAT4	result;
 	t_ray		ray_to_light;
@@ -60,8 +60,8 @@ static t_FTMFLOAT4	light_sum(t_render_resource const *prsrc,
 }
 
 // reflect
-t_FTMFLOAT4	reflect_ray(t_render_resource const *prsrc,
-							const t_ray *ray, t_hit hit)
+t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc,
+							t_ray *ray, t_hit hit)
 {
 	t_material const	*pm = &(((t_plane *)(hit.pobj))->m);
 	t_FTMFLOAT4			result;
