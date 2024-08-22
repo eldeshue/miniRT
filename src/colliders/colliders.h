@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/20 17:23:03 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/21 17:33:43 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 
 t_hit		collider_plane(const t_ray *r, void *obj);
 t_hit		collider_sphere(const t_ray *r, void *obj);
-// t_hit		collider_cylinder(const t_ray *r, void *obj);
+t_hit		collider_cylinder(const t_ray *r, void *obj);
 // t_hit		collider_cone(const t_ray *r, void *obj);
 t_FTMFLOAT4	ray_at(t_ray *ray, float t);
 
