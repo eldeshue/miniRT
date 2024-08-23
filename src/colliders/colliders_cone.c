@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/08/22 20:48:13 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/23 11:47:40 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 			// hit 설정 (충돌 지점 계산)
 			hit.dist = vars.t;
 			hit.ppos = ray_at((t_ray *)r, vars.t);
-			float projection = ftmf4_vdot(ftmf4_vsub(hit.ppos, cone->pvertex), h_unit);
+			float projection = ftmf4_vdot(ftmf4_vsub(hit.ppos, cone->pvertex), tmp2);
 			t_FTMFLOAT4 ww = ftmf4_vadd(cone->pvertex, vmult(&h_unit, projection));
 			t_FTMFLOAT4 hit_normal = ftmf4_vsub(hit.ppos, ww);
 			hit.vnormal = *ftmf4_vnormalize(&hit_normal);
