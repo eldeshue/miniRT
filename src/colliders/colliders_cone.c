@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/08/23 11:47:40 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/23 19:41:57 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,16 +82,19 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 			hit.dist = -1.0;
 		else
 		{
-			// hit 설정 (충돌 지점 계산)
 			hit.dist = vars.t;
 			hit.ppos = ray_at((t_ray *)r, vars.t);
-			float projection = ftmf4_vdot(ftmf4_vsub(hit.ppos, cone->pvertex), tmp2);
-			t_FTMFLOAT4 ww = ftmf4_vadd(cone->pvertex, vmult(&h_unit, projection));
-			t_FTMFLOAT4 hit_normal = ftmf4_vsub(hit.ppos, ww);
-			hit.vnormal = *ftmf4_vnormalize(&hit_normal);
+			t_FTMFLOAT4 hv = ftmf4_vsub(hit.ppos, cone->pvertex); // hit to vertex
+			t_FTMFLOAT4 cv = ftmf4_vsub(cone->pcenter, cone->pvertex); // center to vertex
+			float vdot_hv_cv = ftmf4_vdot(hv, cv); // hv cv 내적 값
+			float size_cv = ftmf4_vsize(&cv); // cv의 크기
+			float size_hv = ftmf4_vsize(&hv); // hv의 크기
+			float cos_theta = vdot_hv_cv / size_cv / size_hv; // 코사인 세타
+			float tmp_cos = size_hv / cos_theta; // hv의 cv에 대한 투영 길이
+			hit.vnormal = ftmf4_vadd(vmult(&h_unit, tmp_cos) , hv);
+			ftmf4_vnormalize( &hit.vnormal );
 			hit.pobj = obj;
 		}
-
 		t_FTMFLOAT4 bottom_center = cone->pcenter;
 		float t_bottom = ftmf4_vdot(ftmf4_vsub(bottom_center, r->pstart), h_unit) / ftmf4_vdot(r->ndir, h_unit);
 		if (t_bottom > EPSILON) {
@@ -104,13 +107,11 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 				hit.pobj = obj;
 			}
 		}
-
 		// hit 검사
 		if (hit.dist != -1.0)
 		{
 			t_FTMFLOAT4 center_to_vertex = ftmf4_vsub(cone->pvertex, cone->pcenter);
 			t_FTMFLOAT4 center_to_hit = ftmf4_vsub(hit.ppos, cone->pcenter);
-
 			if (ftmf4_vdot(center_to_hit, center_to_vertex) < 0||
 				ftmf4_vsize(&center_to_vertex) < ftmf4_vsize(&center_to_hit))
 			{
