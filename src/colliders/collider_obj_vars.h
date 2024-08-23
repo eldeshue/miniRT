@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:18 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 16:08:32 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:39:10 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,5 +84,17 @@ typedef struct s_cylinder_coll_vars
 	float	t2;
 	float	t;
 }	t_cylinder_coll_vars;
+
+typedef struct s_cone_coll_vars
+{
+	float	a;
+	float	b;
+	float	c;
+	float	discriminant;
+	float	sqrt_disc;
+	float	t1;
+	float	t2;
+	float	t;
+}	t_cone_coll_vars;
 
 #endif

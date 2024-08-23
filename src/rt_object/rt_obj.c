@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 18:26:35 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/21 19:42:07 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/22 17:42:17 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,13 +33,11 @@ static int	per_type_init(t_rt_obj *pobj, t_obj_desc *pobj_desc)
 		pobj->obj_ptr = new_cylinder(pobj_desc);
 		pobj->hit = collider_cylinder;
 	}
-/*
 	else if (pobj_desc->type == cone)
 	{
 		pobj->obj_ptr = new_cone(pobj_desc);
 		pobj->hit = collider_cone;
 	}
-*/
 	return (1);
 }
 
