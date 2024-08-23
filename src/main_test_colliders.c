@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main_test_colliders.c                              :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/08/17 18:26:03 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/08/17 18:26:05 by hyeonwch         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   main_test_colliders.c							  :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>	 +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2024/08/17 18:26:03 by hyeonwch		  #+#	#+#			 */
+/*   Updated: 2024/08/22 13:23:00 by hyeonwch		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include <stdlib.h>
@@ -17,6 +17,51 @@
 #include <stdio.h>
 #include <math.h>
 #include "./colliders/colliders.h"
+
+void run_cylinder_tests()
+{
+	t_hit hit;
+
+	// Test Case 1: 원기둥의 내부에서 시작하여 외부로 나가는 경우
+	t_cylinder cylinder1 = { {0}, {{0, 0, 0, 1}}, {{0, 0, 2, 1}}, 1.0 };
+	t_ray ray1 = { {{0, 0, 1, 1}}, {{0, 0, 1, 0}} };
+	hit = collider_cylinder(&ray1, &cylinder1);
+	printf("Cylinder Collider Test Case 1:\n");
+	printf("Hit distance: %f\n", hit.dist);
+	printf("Expected to hit at a positive distance.\n\n");
+
+	// Test Case 2: 원기둥의 외부에서 시작하여 스쳐 지나가는 경우
+	t_cylinder cylinder2 = { {0}, {{0, 0, 0, 1}}, {{0, 0, 2, 1}}, 1.0 };
+	t_ray ray2 = { {{2, 0, 1, 1}}, {{1, 0, 0, 0}} };
+	hit = collider_cylinder(&ray2, &cylinder2);
+	printf("Cylinder Collider Test Case 2:\n");
+	printf("Hit distance: %f\n", hit.dist);
+	printf("Expected hit distance: -1.0 (no intersection)\n\n");
+
+	// Test Case 3: 원기둥의 중심을 관통하는 경우
+	t_cylinder cylinder3 = { {0}, {{0, 0, 0, 1}}, {{0, 0, 2, 1}}, 1.0 };
+	t_ray ray3 = { {{0, 0, 3, 1}}, {{0, 0, -1, 0}} };
+	hit = collider_cylinder(&ray3, &cylinder3);
+	printf("Cylinder Collider Test Case 3:\n");
+	printf("Hit distance: %f\n", hit.dist);
+	printf("Expected to hit at a positive distance.\n\n");
+
+	// Test Case 4: 원기둥의 표면에서 시작하여 외부로 나가는 경우
+	t_cylinder cylinder4 = { {0}, {{0, 0, 0, 1}}, {{0, 0, 2, 1}}, 1.0 };
+	t_ray ray4 = { {{1, 0, 1, 1}}, {{1, 0, 0, 0}} };
+	hit = collider_cylinder(&ray4, &cylinder4);
+	printf("Cylinder Collider Test Case 4:\n");
+	printf("Hit distance: %f\n", hit.dist);
+	printf("Expected hit distance: -1.0 (no intersection)\n\n");
+
+	// Test Case 5: 원기둥의 외부에서 시작하여 내부로 진입하는 경우
+	t_cylinder cylinder5 = { {0}, {{0, 0, 0, 1}}, {{0, 0, 2, 1}}, 1.0 };
+	t_ray ray5 = { {{2, 0, 1, 1}}, {{-1, 0, 0, 0}} };
+	hit = collider_cylinder(&ray5, &cylinder5);
+	printf("Cylinder Collider Test Case 5:\n");
+	printf("Hit distance: %f\n", hit.dist);
+	printf("Expected to hit at a positive distance.\n\n");
+}
 
 void run_sphere_tests()
 {
@@ -117,5 +162,7 @@ int main()
 	// Run plane collision tests
 	run_plane_tests();
 
+	// Run cylinder collision tests
+	run_cylinder_tests();
 	return 0;
 }
