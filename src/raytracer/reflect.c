@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/26 16:28:07 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/26 16:30:51 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,7 @@ t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc,
 	t_material const	*pm = &(((t_plane *)(hit.pobj))->m);
 	t_FTMFLOAT4			result;
 
-	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
-	result = ftmf4_vadd(result, light_sum(prsrc, ray, &hit));
+	result = light_sum(prsrc, ray, &hit);
 	result.data[0] = result.data[0] * pm->obj_color.data[0] / 255.0f;
 	result.data[1] = result.data[1] * pm->obj_color.data[1] / 255.0f;
 	result.data[2] = result.data[2] * pm->obj_color.data[2] / 255.0f;
