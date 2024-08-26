@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/26 16:30:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/26 16:48:31 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@
 static int	is_shadowed(t_render_resource *prsrc,
 							t_ray *pray_to_light)
 {
+	pray_to_light->pstart = ftmf4_vadd(pray_to_light->pstart,
+			vmult(&pray_to_light->ndir, 0.005f));
 	return (get_hit_per_ray(prsrc, pray_to_light).pobj != NULL);
 }
 
