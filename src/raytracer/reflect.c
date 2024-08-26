@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/22 20:30:06 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/26 16:28:07 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 	size_t		idx;
 	float		cos_angle[2];
 
-	result = ftmf4_set_vector(0.0f, 0.0f, 0.0f, 0.0f);
+	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
 	idx = -1;
 	while (++idx < prsrc->lights->size)
 	{
@@ -53,7 +53,7 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 			cos_angle[1] = ftmf4_vdot(reflect_vector(cos_angle[0], ray->ndir,
 						phit->vnormal), ray_to_light.ndir);
 			result = ftmf4_vadd(result, vmult(&pl->color, pl->intensity
-						* (cos_angle[0] + powf(cos_angle[1], SPECULAR_POWER))));
+						* (cos_angle[0] + pow(cos_angle[1], SPECULAR_POWER))));
 		}
 	}
 	clamp(&result);
