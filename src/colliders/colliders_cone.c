@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/08/23 19:41:57 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/28 20:29:54 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,28 @@ typedef struct s_cone
 }				t_cone;
 */
 
-void	cone_coll_set_vars(t_cone_coll_vars *vars, t_FTMFLOAT4 oc, t_FTMFLOAT4 ndir, t_FTMFLOAT4 h_unit, float m, t_cone cone)
+float	co_find_intersection_time(float t1, float t2)
 {
-	(void)cone;
+	if (t1 > EPSILON && t2 > EPSILON)  // 둘 다 양수인 경우
+	{
+		if (t1 < t2)
+			return (t1);  // 가까운 지점 반환
+		else
+			return (t2);  // 가까운 지점 반환
+	}
+	else if ((t1 < EPSILON && t2 > EPSILON) || (t1 > EPSILON && t2 < EPSILON)) // 하나는 음수, 하나는 양수인 경우
+	{
+		if (t1 < EPSILON)
+			return (t2);  // 양수인 지점 반환
+		else
+			return (t1);  // 양수인 지점 반환
+	}
+	else  // 둘 다 음수인 경우
+		return (-1);  // 교차점이 없음을 의미
+}
+
+void	cone_coll_set_vars(t_cone_coll_vars *vars, t_FTMFLOAT4 oc, t_FTMFLOAT4 ndir, t_FTMFLOAT4 h_unit, float m)
+{
 	float a_dot = ftmf4_vdot(ndir, h_unit);
 	float c_dot = ftmf4_vdot(oc, h_unit);
 	vars->a = ftmf4_vdot(ndir, ndir) - (m + 1) * pow(a_dot, 2);
@@ -43,71 +62,49 @@ void	cone_coll_set_vars(t_cone_coll_vars *vars, t_FTMFLOAT4 oc, t_FTMFLOAT4 ndir
 		vars->sqrt_disc = sqrt(vars->discriminant);
 		vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
 		vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
-		vars->t = cy_find_intersection_time(vars->t1, vars->t2);
-
+		vars->t = co_find_intersection_time(vars->t1, vars->t2);
 	}
 }
-
-void	cone_coll_compute_t(t_cone_coll_vars *vars)
-{
-	vars->sqrt_disc = sqrt(vars->discriminant);
-	vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
-	vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
-	vars->t = cy_find_intersection_time(vars->t1, vars->t2);
-}
-
 
 t_hit	collider_cone(const t_ray *r, void *obj)
 {
 	t_cone				*cone;
 	t_hit				hit;
 	t_FTMFLOAT4			oc; // 광선의 시작점과 원뿔 꼭짓점 사이의 벡터
+	t_FTMFLOAT4			cv;
 	t_FTMFLOAT4			h_unit; // 원뿔의 높이 방향 벡터
 	t_FTMFLOAT4			tmp;
-	t_FTMFLOAT4			tmp2;
 	t_cone_coll_vars	vars;
+	float				m;
 
+	init_hit(&hit);
 	cone = (t_cone *)obj;
+
 	oc = ftmf4_vsub(r->pstart, cone->pvertex);
+
+	// 원뿔의 높이 방향 벡터 (밑면 중심 -> 꼭짓점)
+	cv = ftmf4_vsub(cone->pvertex, cone->pcenter);
+	h_unit = *ftmf4_vnormalize(&cv);
 	tmp = ftmf4_vsub(cone->pvertex, cone->pcenter);
-	tmp2 = ftmf4_vsub(cone->pvertex, cone->pcenter);
-	h_unit = *ftmf4_vnormalize(&tmp);
-	cone_coll_set_vars(&vars, oc, r->ndir, h_unit, pow(cone->radius / ftmf4_vsize(&tmp2) , 2), *cone);
-	if (vars.discriminant < 0)
-		hit.dist = -1.0;
-	else
+	m = pow(cone->radius / ftmf4_vsize(&tmp), 2);
+	cone_coll_set_vars(&vars, oc, r->ndir, h_unit, m);
+
+	// 교차점 존재
+	if (vars.t > 0)
 	{
-		cone_coll_compute_t(&vars);
-		if (vars.t == -1.0)
-			hit.dist = -1.0;
-		else
-		{
-			hit.dist = vars.t;
-			hit.ppos = ray_at((t_ray *)r, vars.t);
-			t_FTMFLOAT4 hv = ftmf4_vsub(hit.ppos, cone->pvertex); // hit to vertex
-			t_FTMFLOAT4 cv = ftmf4_vsub(cone->pcenter, cone->pvertex); // center to vertex
-			float vdot_hv_cv = ftmf4_vdot(hv, cv); // hv cv 내적 값
-			float size_cv = ftmf4_vsize(&cv); // cv의 크기
-			float size_hv = ftmf4_vsize(&hv); // hv의 크기
-			float cos_theta = vdot_hv_cv / size_cv / size_hv; // 코사인 세타
-			float tmp_cos = size_hv / cos_theta; // hv의 cv에 대한 투영 길이
-			hit.vnormal = ftmf4_vadd(vmult(&h_unit, tmp_cos) , hv);
-			ftmf4_vnormalize( &hit.vnormal );
-			hit.pobj = obj;
-		}
-		t_FTMFLOAT4 bottom_center = cone->pcenter;
-		float t_bottom = ftmf4_vdot(ftmf4_vsub(bottom_center, r->pstart), h_unit) / ftmf4_vdot(r->ndir, h_unit);
-		if (t_bottom > EPSILON) {
-			t_FTMFLOAT4 hit_pos = ray_at((t_ray *)r, t_bottom);
-			t_FTMFLOAT4 bottomsub = ftmf4_vsub(hit_pos, bottom_center);
-			if (ftmf4_vsize(&bottomsub) <= cone->radius) {
-				hit.dist = t_bottom;
-				hit.ppos = hit_pos;
-				hit.vnormal = h_unit;
-				hit.pobj = obj;
-			}
-		}
-		// hit 검사
+		hit.dist = vars.t;
+		hit.ppos = ray_at((t_ray *)r, vars.t);
+
+		t_FTMFLOAT4 hv = ftmf4_vsub(hit.ppos, cone->pvertex); // hit to vertex
+		t_FTMFLOAT4 cv = ftmf4_vsub(cone->pcenter, cone->pvertex); // center to vertex
+		float vdot_hv_cv = ftmf4_vdot(hv, cv); // hv cv 내적 값
+		float size_cv = ftmf4_vsize(&cv); // cv의 크기
+		float size_hv = ftmf4_vsize(&hv); // hv의 크기
+		float cos_theta = vdot_hv_cv / size_cv / size_hv; // 코사인 세타
+		float tmp_cos = size_hv / cos_theta; // hv의 cv에 대한 투영 길이
+		hit.vnormal = ftmf4_vadd(vmult(&h_unit, tmp_cos) , hv);
+		ftmf4_vnormalize( &hit.vnormal );
+		hit.pobj = obj;
 		if (hit.dist != -1.0)
 		{
 			t_FTMFLOAT4 center_to_vertex = ftmf4_vsub(cone->pvertex, cone->pcenter);
@@ -117,6 +114,23 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 			{
 				hit.dist = -1.0f;
 				hit.pobj = NULL;
+			}
+		}
+	}
+	float projection_on_axis = ftmf4_vdot(oc, h_unit);
+	if (hit.dist == -1)
+	{
+		if (projection_on_axis < 0)
+		{
+			t_FTMFLOAT4 bottom_center = cone->pcenter;
+			float t_bottom = ftmf4_vdot(ftmf4_vsub(bottom_center, r->pstart), h_unit) / ftmf4_vdot(r->ndir, h_unit);
+			t_FTMFLOAT4 hit_pos = ray_at((t_ray *)r, t_bottom);
+			t_FTMFLOAT4 bottomsub = ftmf4_vsub(hit_pos, bottom_center);
+			if (ftmf4_vsize(&bottomsub) <= cone->radius) {
+				hit.dist = t_bottom;
+				hit.ppos = hit_pos;
+				hit.vnormal = vscale(h_unit, -1);
+				hit.pobj = obj;
 			}
 		}
 	}

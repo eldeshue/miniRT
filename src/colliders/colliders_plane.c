@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:24 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/20 17:27:08 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/28 19:26:26 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 void	plane_coll_set_vars(t_plane_coll_vars *vars, t_FTMFLOAT4 p0_minus_o, t_FTMFLOAT4 ndir, t_FTMFLOAT4 vnormal)
 {
-	vars->denom = ftmf4_vdot(vnormal, ndir);
-	if (fabs(vars->denom) > EPSILON) // 교차 가능성 있음
-		vars->t = ftmf4_vdot(vnormal, p0_minus_o) / vars->denom;
+	vars->denom = ftmf4_vdot(ndir, vnormal);
+	if (fabs(vars->denom) < EPSILON) // 교차 가능성 있음
+		vars->t = FLOAT_MAX; // 평행하여 교차하지 않음
 	else
-		vars->t = -1.0; // 평행하여 교차하지 않음
+		vars->t = ftmf4_vdot(p0_minus_o, vnormal) / vars->denom;
 }
 
 void	plane_coll_set_hit(t_hit *hit, t_ray *r, t_plane *plane, t_plane_coll_vars vars, void *obj)
@@ -28,6 +28,7 @@ void	plane_coll_set_hit(t_hit *hit, t_ray *r, t_plane *plane, t_plane_coll_vars 
 	hit->dist = vars.t;
 	hit->ppos = ray_at(r, vars.t);
 	hit->vnormal = plane->vnormal;
+	set_face_normal(hit, r, plane->vnormal);
 	hit->pobj = obj;
 }
 
