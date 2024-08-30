@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   view_plane.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:15:47 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:27:53 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/28 19:12:35 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,9 @@ void	set_view_plane(t_render_resource *const prsrc)
 {
 	t_FTMFLOAT4			plu;
 
+	ftmf4_vnormalize(&prsrc->cam.vtarget);
+	if (fabs(ftmf4_vdot(prsrc->cam.vtarget, prsrc->cam.vup)) == 1.0f)
+		prsrc->cam.vup.data[0] += 0.0001f;
 	set_property(prsrc, &plu, &prsrc->vdx, &prsrc->vdy);
 	set_points(prsrc, &plu, &prsrc->vdx, &prsrc->vdy);
 }

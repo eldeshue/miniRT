@@ -7,7 +7,8 @@ LDFLAGS = -lm -L. -lmlx -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./
 # target rule
 NAME = minirt
 
-srcs = ./src/colliders/colliders_utils.c \
+srcs = ./src/raytracer/reflect.c \
+./src/colliders/colliders_utils.c \
 ./src/colliders/colliders_plane.c \
 ./src/colliders/colliders_sphere.c \
 ./src/colliders/colliders_cylinder.c \

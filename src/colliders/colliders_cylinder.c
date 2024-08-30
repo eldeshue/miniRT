@@ -42,12 +42,7 @@ float	cy_find_intersection_time(float t1, float t2)
 			return (t1);  // 양수인 지점 반환
 	}
 	else  // 둘 다 음수인 경우
-	{
-		if (fabs(t1) < fabs(t2))
-			return (t1);  // 가까운 지점 반환
-		else
-			return (t2);  // 가까운 지점 반환
-	}
+		return (FLOAT_MAX);  // 교차점이 없음을 의미
 }
 
 void	cylinder_coll_set_vars(t_cylinder_coll_vars *vars, t_FTMFLOAT4 oc, t_FTMFLOAT4 ndir, t_FTMFLOAT4 h_unit, t_cylinder cylinder)
@@ -64,72 +59,122 @@ void	cylinder_coll_set_vars(t_cylinder_coll_vars *vars, t_FTMFLOAT4 oc, t_FTMFLO
 	// printf("a: %f, b: %f, c: %f, discriminant: %f\n", vars->a, vars->b, vars->c, vars->discriminant);
 
 	// a == 0인 경우 특별 처리
-	if (vars->a == 0) {
-		vars->t = -1.0;  // 교차 없음으로 처리
-	} else if (vars->discriminant < 0) {
-		vars->t = -1.0; // 교차점 없음으로 설정
-	} else {
+	if (vars->a < EPSILON)
+		vars->t = FLOAT_MAX;  // 교차 없음으로 처리
+	else if (vars->discriminant < 0)
+		vars->t = FLOAT_MAX; // 교차점 없음으로 설정
+	else
+	{
 		vars->sqrt_disc = sqrt(vars->discriminant);
 		vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
 		vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
 		vars->t = cy_find_intersection_time(vars->t1, vars->t2);
-
-		float hit_z = oc.data[2] + vars->t * ndir.data[2];  // z 축의 hit position 계산
-		float pcenter1_z = cylinder.pcenter1.data[2]; // 원기둥의 밑면 z 값
-		float pcenter2_z = cylinder.pcenter2.data[2]; // 원기둥의 윗면 z 값
-
-		// hit_z가 원기둥의 높이 범위 내에 있는지 확인
-		if (hit_z < pcenter2_z || hit_z > pcenter1_z) {
-			vars->t = -1.0; // 교차점이 원기둥의 범위를 벗어남
-		}
+		if (vars->t < EPSILON)
+			vars->t = FLOAT_MAX;
 	}
 }
 
-void	cylinder_coll_compute_t(t_cylinder_coll_vars *vars)
+void check_cylinder_caps(t_hit *hit, t_ray *r, t_cylinder *cylinder, void *obj, int is_top)
 {
-	vars->sqrt_disc = sqrt(vars->discriminant);
-	vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
-	vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
-	vars->t = cy_find_intersection_time(vars->t1, vars->t2);
+	t_FTMFLOAT4 h;
+	t_FTMFLOAT4	h_unit;
+	t_FTMFLOAT4	center;
+	t_FTMFLOAT4	p0_minus_o;
+	t_FTMFLOAT4	cp;
+	t_FTMFLOAT4 hit_pos;
+	float		t;
+	float		denom;
+
+	h = ftmf4_vsub(cylinder->pcenter2, cylinder->pcenter1);
+	h_unit = *ftmf4_vnormalize(&h);
+
+	if (is_top)
+		center = cylinder->pcenter2;
+	else
+	{
+		center = cylinder->pcenter1;
+		h_unit = vscale(h_unit, -1);
+	}
+
+	p0_minus_o = ftmf4_vsub(center, r->pstart);
+	denom = ftmf4_vdot(r->ndir, h_unit);
+
+	// denom이 0에 가까운 경우를 처리
+	if (fabs(denom) < EPSILON)
+	{
+		hit->dist = FLOAT_MAX;
+		hit->pobj = NULL;
+		return ;
+	}
+
+	t = ftmf4_vdot(p0_minus_o, h_unit) / denom;
+	hit_pos = ray_at(r, t);
+	cp = ftmf4_vsub(center, hit_pos);
+
+	// 교차점이 원기둥의 캡 범위 안에 있는지 확인
+	if (ftmf4_vdot(cp, cp) <= pow(cylinder->radius, 2))
+	{
+		hit->dist = t;
+		hit->ppos = hit_pos;
+		hit->pobj = obj;
+		hit->vnormal = h_unit;
+		set_face_normal(hit, r, h_unit);
+	}
+	else
+	{
+		hit->dist = FLOAT_MAX;
+		hit->pobj = NULL;
+	}
 }
 
 void	cylinder_coll_set_hit(t_hit *hit, t_ray *r, t_cylinder *cylinder, t_cylinder_coll_vars vars, void *obj)
 {
 	t_FTMFLOAT4	pqtrn;
-	t_FTMFLOAT4	*h_unit;
-	t_FTMFLOAT4	tmp;
+	t_FTMFLOAT4	h_unit;
 	t_FTMFLOAT4	h;
+	t_FTMFLOAT4	cylinder_axis;
+	t_FTMFLOAT4	p_to_hit;
+	float		height_on_axis;
+	float		cylinder_height;
 
-	tmp = ftmf4_vsub(cylinder->pcenter2, cylinder->pcenter1);
-	h_unit = ftmf4_vnormalize(&tmp);
-	h = vmult(h_unit, vars.t);
+	// cylinder 축 계산
+	h = ftmf4_vsub(cylinder->pcenter2, cylinder->pcenter1);
+	h_unit = *ftmf4_vnormalize(&h);
+
 	hit->dist = vars.t;
 	hit->ppos = ray_at(r, vars.t);
-	if (hit->ppos.data[2] > cylinder->pcenter1.data[2] || hit->ppos.data[2] < cylinder->pcenter2.data[2])
+
+	// 밑면에서 교차점까지의 벡터
+	p_to_hit = ftmf4_vsub(hit->ppos, cylinder->pcenter1);
+
+	// 원기둥 축 방향으로의 투영 길이
+	height_on_axis = ftmf4_vdot(p_to_hit, h_unit);
+
+	// 원기둥의 높이
+	cylinder_axis = ftmf4_vsub(cylinder->pcenter2, cylinder->pcenter1);
+	cylinder_height = ftmf4_vsize(&cylinder_axis);
+
+	// 교차점이 원기둥의 높이 범위 내에 있는지 확인
+	if (height_on_axis < 0 || height_on_axis > cylinder_height)
 	{
-		hit->dist = -1.0f;
+		hit->dist = FLOAT_MAX;
 		return ;
 	}
-	pqtrn = ftmf4_vsub(ftmf4_vsub(hit->ppos, cylinder->pcenter1), h);
+
+	// 교차점에서 원기둥 축을 따라 height_on_axis 만큼 이동한 지점을 구하고, 이를 원기둥 표면에서의 교차점으로 변환
+	pqtrn = ftmf4_vsub(p_to_hit, vmult(&h_unit, height_on_axis));
 	hit->vnormal = *ftmf4_vnormalize(&pqtrn);
 	hit->pobj = obj;
 }
 
-t_FTMFLOAT4 vscale(t_FTMFLOAT4 v, float s) {
-	t_FTMFLOAT4	result;
-
-	result.data[0] = v.data[0] * s;
-	result.data[1] = v.data[1] * s;
-	result.data[2] = v.data[2] * s;
-	result.data[3] = v.data[3] * s; // 이 값은 보통 1.0f로 유지되지만, 필요한 경우 스케일링 가능
-
-	return result;
-}
 
 t_hit	collider_cylinder(const t_ray *r, void *obj)
 {
 	t_cylinder			*cylinder;
 	t_hit				hit;
+	t_hit				hit_surface;
+	t_hit				hit_top;
+	t_hit				hit_bottom;
 	t_FTMFLOAT4			oc; // 광선의 시작점과 원의 중심(밑면) 사이의 벡터
 	t_FTMFLOAT4			h_unit; // cylinder의 높이 방향 벡터
 	t_FTMFLOAT4			tmp;
@@ -140,41 +185,27 @@ t_hit	collider_cylinder(const t_ray *r, void *obj)
 	tmp = ftmf4_vsub(cylinder->pcenter2, cylinder->pcenter1);
 	h_unit = *ftmf4_vnormalize(&tmp);
 	cylinder_coll_set_vars(&vars, oc, r->ndir, h_unit, *cylinder);
-
+	init_hit(&hit_surface);
+	init_hit(&hit_top);
+	init_hit(&hit_bottom);
 	if (vars.discriminant >= 0)
 	{
-		cylinder_coll_compute_t(&vars);
-		if (vars.t > EPSILON) // 곡면과의 교차가 존재하는 경우
-			cylinder_coll_set_hit(&hit, (t_ray *)r, cylinder, vars, obj);
+		if (vars.t == FLOAT_MAX)
+			hit_surface.dist = FLOAT_MAX;
+		else
+			cylinder_coll_set_hit(&hit_surface, (t_ray *)r, cylinder, vars, obj);
 	}
+	check_cylinder_caps(&hit_top, (t_ray *)r, cylinder, obj, 0);
+	check_cylinder_caps(&hit_bottom, (t_ray *)r, cylinder, obj, 1);
+	if (hit_top.dist == FLOAT_MAX && hit_bottom.dist == FLOAT_MAX)
+		hit = hit_surface;
+	else if (hit_top.dist < hit_bottom.dist)
+		hit = hit_top;
+	else
+		hit = hit_bottom;
 
-	// 윗면과의 교차
-	t_FTMFLOAT4 top_center = cylinder->pcenter2;
-	float t_top = ftmf4_vdot(ftmf4_vsub(top_center, r->pstart), h_unit) / ftmf4_vdot(r->ndir, h_unit);
-	if (t_top > EPSILON) {
-		t_FTMFLOAT4 hit_pos = ray_at((t_ray *)r, t_top);
-		t_FTMFLOAT4 topsub = ftmf4_vsub(hit_pos, top_center);
-		if (ftmf4_vsize(&topsub) <= cylinder->radius) {
-			hit.dist = t_top;
-			hit.ppos = hit_pos;
-			hit.vnormal = h_unit;
-			hit.pobj = obj;
-		}
-	}
-
-	// 밑면과의 교차
-	t_FTMFLOAT4 bottom_center = cylinder->pcenter1;
-	float t_bottom = ftmf4_vdot(ftmf4_vsub(bottom_center, r->pstart), h_unit) / ftmf4_vdot(r->ndir, h_unit);
-	if (t_bottom > EPSILON) {
-		t_FTMFLOAT4 hit_pos = ray_at((t_ray *)r, t_bottom);
-		t_FTMFLOAT4 bottomsub = ftmf4_vsub(hit_pos, bottom_center);
-		if (ftmf4_vsize(&bottomsub) <= cylinder->radius) {
-			hit.dist = t_bottom;
-			hit.ppos = hit_pos;
-			hit.vnormal = vscale(h_unit, -1); // 밑면의 법선은 윗면의 반대 방향
-			hit.pobj = obj;
-		}
-	}
+	if (hit_surface.dist < hit.dist)
+		hit = hit_surface;
 
 	return (hit);
 }
