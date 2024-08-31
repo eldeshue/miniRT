@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:24 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/31 16:44:40 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:01:08 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ t_hit	collider_plane(const t_ray *r, void *obj)
 	plane = (t_plane *)obj;
 	p0_minus_o = ftmf4_vsub(plane->pcenter, r->pstart);
 	plane_coll_set_vars(&vars, p0_minus_o, r->ndir, plane->vnormal);
-	if (vars.t < 0)
+	if (vars.t == FLOAT_MAX)
 		process_wrong_hit(&hit);
 	else
 		plane_coll_set_hit(&hit, (t_ray *)r, plane, vars);

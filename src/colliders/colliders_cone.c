@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/08/31 17:48:32 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/31 20:18:28 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,8 @@ void	co_check_coll_cap(t_hit *hit, t_cone_coll_vars *var, t_ray *r)
 			hit->ppos = hit_pos;
 			hit->vnormal = vmult(&var->h_unit, -1);
 			hit->pobj = var->pobj;
+			return ;
 		}
-		else
-			process_wrong_hit(hit);
 	}
 	process_wrong_hit(hit);
 }
@@ -81,6 +80,7 @@ void	co_check_coll_surface(t_hit *hit, t_cone_coll_vars *vars, t_ray *r)
 	float				tmp_cos;
 	t_FTMFLOAT4			center_to_hit;
 
+	hit->pobj = vars->pobj;
 	hit->dist = vars->t;
 	hit->ppos = ray_at(r, vars->t);
 	hv = ftmf4_vsub(hit->ppos, ((t_cone *)vars->pobj)->pvertex);
@@ -94,9 +94,30 @@ void	co_check_coll_surface(t_hit *hit, t_cone_coll_vars *vars, t_ray *r)
 		center_to_hit = ftmf4_vsub(hit->ppos, ((t_cone *)vars->pobj)->pcenter);
 		if (ftmf4_vdot(center_to_hit, vars->cone_axis) < 0
 			|| vars->cone_height < ftmf4_vsize(&center_to_hit))
-			process_wrong_hit(&hit);
+			process_wrong_hit(hit);
 	}
-	process_wrong_hit(hit);
+	else
+		process_wrong_hit(hit);
+}
+
+void	init_coll_vars(t_cone_coll_vars *vars)
+{
+	vars->a = 0;
+	vars->b = 0;
+	vars->c = 0;
+	vars->discriminant = 0;
+	vars->sqrt_disc = 0;
+	vars->t1 = 0;
+	vars->t2 = 0;
+	vars->t = 0;
+	vars->m = 0;
+	vars->oc = ftmf4_set_vector(0, 0, 0, 0);
+	vars->cv = ftmf4_set_vector(0, 0, 0, 0);
+	vars->cone_axis = ftmf4_set_vector(0, 0, 0, 0);
+	vars->h_unit = ftmf4_set_vector(0, 0, 0, 0);
+	vars->height_on_axis = 0;
+	vars->cone_height = 0;
+	vars->pobj = NULL;
 }
 
 t_hit	collider_cone(const t_ray *r, void *obj)
@@ -104,15 +125,15 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 	t_hit				hit_surface;
 	t_hit				hit_cap;
 	t_cone_coll_vars	vars;
-	t_FTMFLOAT4			tmp;
 
 	init_hit(&hit_surface);
 	init_hit(&hit_cap);
-	tmp = ftmf4_vsub(((t_cone *)obj)->pvertex, ((t_cone *)obj)->pcenter);
-	vars.h_unit = *ftmf4_vnormalize(&tmp);
+	init_coll_vars(&vars);
+	vars.h_unit = ftmf4_vsub(((t_cone *)obj)->pvertex, ((t_cone *)obj)->pcenter);
+	ftmf4_vnormalize(&vars.h_unit);
 	vars.pobj = obj;
 	cone_coll_set_vars(&vars, (t_cone *)obj, (t_ray *)r);
-	if (vars.t > 0)
+	if (vars.t != FLOAT_MAX)
 		co_check_coll_surface(&hit_surface, &vars, (t_ray *)r);
 	co_check_coll_cap(&hit_cap, &vars, (t_ray *)r);
 	if (hit_surface.dist < hit_cap.dist)

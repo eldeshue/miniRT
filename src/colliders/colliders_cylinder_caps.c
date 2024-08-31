@@ -15,14 +15,11 @@
 #include <math.h>
 #include <stdio.h>
 
-float	cy_compute_cap_t(t_ray *r, t_FTMFLOAT4	center, t_FTMFLOAT4	h_unit,
-							float radius)
+float	cy_compute_cap_t(t_ray *r, t_FTMFLOAT4	center, t_FTMFLOAT4	h_unit)
 {
 	t_FTMFLOAT4	p0_minus_o;
 	float		denom;
 	float		t;
-	t_FTMFLOAT4	hit_pos;
-	t_FTMFLOAT4	cp;
 
 	p0_minus_o = ftmf4_vsub(center, r->pstart);
 	denom = ftmf4_vdot(r->ndir, h_unit);
@@ -40,7 +37,8 @@ void	cy_set_coll_cap_hit(t_hit *hit, t_ray *r, float t,
 
 	if (t == FLOAT_MAX)
 	{
-		process_wrong_hit(hit);
+		hit->dist = t;
+		hit->pobj = vars.pobj;
 		return ;
 	}
 	hit_pos = ray_at(r, t);
@@ -63,21 +61,33 @@ void	cy_check_coll_cap(t_cylinder_coll_vars *vars, t_ray *r, t_hit *hit_cap)
 	float				t_top;
 	float				t_bottom;
 
-	t_top = cy_compute_cap_t(r, cylinder->pcenter2, vars->h_unit, vars->radius);
-	t_bottom = cy_compute_cap_t(r, cylinder->pcenter1,
-			vmult(&(vars->h_unit), -1), vars->radius);
-	if (t_top < t_bottom)
+	t_top = cy_compute_cap_t(r, cylinder->pcenter2, vars->h_unit);
+	t_bottom = cy_compute_cap_t(r, cylinder->pcenter1, vmult(&(vars->h_unit), -1));
+	if (t_top != FLOAT_MAX && t_bottom != FLOAT_MAX)
+	{
+		if (t_top < t_bottom)
+		{
+			vars->cap_center = cylinder->pcenter2;
+			vars->cap_normal = vars->h_unit;
+			cy_set_coll_cap_hit(hit_cap, r, t_top, *vars);
+		}
+		else
+		{
+			vars->cap_center = cylinder->pcenter1;
+			vars->cap_normal = vmult(&(vars->h_unit), -1);
+			cy_set_coll_cap_hit(hit_cap, r, t_bottom, *vars);
+		}
+	}
+	else if (t_top != FLOAT_MAX)
 	{
 		vars->cap_center = cylinder->pcenter2;
 		vars->cap_normal = vars->h_unit;
+		cy_set_coll_cap_hit(hit_cap, r, t_top, *vars);
 	}
-	else
+	else if (t_bottom != FLOAT_MAX)
 	{
 		vars->cap_center = cylinder->pcenter1;
 		vars->cap_normal = vmult(&(vars->h_unit), -1);
-	}
-	if (t_top < t_bottom)
-		cy_set_coll_cap_hit(hit_cap, r, t_top, *vars);
-	else
 		cy_set_coll_cap_hit(hit_cap, r, t_bottom, *vars);
+	}
 }

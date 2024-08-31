@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:39:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/28 20:30:45 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/08/31 21:04:56 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ int	init_render_resource(t_render_resource *self, char **argv)
 	// test code
 	// camera init
 	self->fov = 90;
-	self->cam.vpos = ftmf4_set_vector(300.0f, 0.0f, 200.0f, 1.0f);
-	self->cam.vtarget = ftmf4_set_vector(-1.0f, 0.0f, -1.0f, 0.0f);
+	self->cam.vpos = ftmf4_set_vector(-250.0f, 0.0f, 200.0f, 1.0f);
+	self->cam.vtarget = ftmf4_set_vector(1.0f, 0.0f, -0.5f, 0.0f);
 	ftmf4_vnormalize(&self->cam.vtarget);
 	self->cam.vup = ftmf4_set_vector(0.0f, 0.0f, 1.0f, 0.0f);
 
@@ -46,12 +46,11 @@ int	init_render_resource(t_render_resource *self, char **argv)
 
 	// cylinder
 	tmp.m.obj_color = ftmf4_set_vector(120.0f, 5.0f, 5.0f, 0.0f);	// green
-	tmp.p1 = ftmf4_set_vector(150.0f, 0.0f, 100.0f, 1.0f); // bottom center
-	tmp.p2 = ftmf4_set_vector(100.0f, 0.0f, 70.0f, 1.0f); // top center
-	tmp.val = 40.0f;
-
+	tmp.p1 = ftmf4_set_vector(40.0f, 0.0f, 40.0f, 1.0f); // bottom center
+	tmp.p2 = ftmf4_set_vector(40.0f, 0.0f, 100.0f, 1.0f); // top center
+	tmp.val = 15.0f;
 	tmp.type = cylinder;
-	// self->render_objects->push_back(self->render_objects, &tmp);
+	self->render_objects->push_back(self->render_objects, &tmp);
 
 	// plane
 	tmp.m.obj_color = ftmf4_set_vector(155.0f, 155.0f, 155.0f, 0.0f);	// blue
@@ -63,11 +62,11 @@ int	init_render_resource(t_render_resource *self, char **argv)
 
 	// cone
 	tmp.m.obj_color = ftmf4_set_vector(55.0f, 55.0f, 255.0f, 0.0f);	// red
-	tmp.p1 = ftmf4_set_vector(100.0f, 0.0f, 100.0f, 1.0f);   // center
-	tmp.p2 = ftmf4_set_vector(100.0f, 0.0f, 70.0f, 1.0f);  // vertex
+	tmp.p1 = ftmf4_set_vector(40.0f, 0.0f, 100.0f, 1.0f);   // center
+	tmp.p2 = ftmf4_set_vector(80.0f, 0.0f, 40.0f, 1.0f);  // vertex
 	tmp.val = 20.0f;
 	tmp.type = cone;
-	self->render_objects->push_back(self->render_objects, &tmp);
+	// self->render_objects->push_back(self->render_objects, &tmp);
 
 	// light init
 	t_light	l;

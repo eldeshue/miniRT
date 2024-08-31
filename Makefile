@@ -12,6 +12,8 @@ srcs = ./src/raytracer/reflect.c \
 ./src/colliders/colliders_plane.c \
 ./src/colliders/colliders_sphere.c \
 ./src/colliders/colliders_cylinder.c \
+./src/colliders/colliders_cylinder_caps.c \
+./src/colliders/colliders_cylinder_surface.c \
 ./src/colliders/colliders_cone.c \
 ./src/light/light.c \
 ./src/main.c \
