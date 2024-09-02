@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/02 12:37:10 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/02 19:11:31 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,8 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 		ftmf4_vnormalize(&ray_to_light.ndir);
 		if (!is_shadowed(prsrc, &ray_to_light))
 		{
-			cos[0] = fabs(ftmf4_vdot(vmult(&ray->ndir, -1.0f), phit->vnormal));
-			cos[1] = fabs(ftmf4_vdot(reflect_vector(cos[0], ray->ndir,
+			cos[0] = (ftmf4_vdot(ray_to_light.ndir, phit->vnormal));
+			cos[1] = (ftmf4_vdot(reflect_vector(cos[0], ray->ndir,
 							phit->vnormal), ray_to_light.ndir));
 			result = ftmf4_vadd(result, vmult(&pl->color, pl->intensity
 						* (cos[0] + pow(cos[1], SPECULAR_POWER))));
