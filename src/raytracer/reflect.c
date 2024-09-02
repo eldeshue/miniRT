@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reflect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/28 20:15:23 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/02 12:37:10 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 	t_ray		ray_to_light;
 	t_light		*pl;
 	size_t		idx;
-	float		cos_angle[2];
+	float		cos[2];
 
 	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
 	idx = -1;
@@ -51,11 +51,11 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 		ftmf4_vnormalize(&ray_to_light.ndir);
 		if (!is_shadowed(prsrc, &ray_to_light))
 		{
-			cos_angle[0] = ftmf4_vdot(vmult(&ray->ndir, -1.0f), phit->vnormal);
-			cos_angle[1] = ftmf4_vdot(reflect_vector(cos_angle[0], ray->ndir,
-						phit->vnormal), ray_to_light.ndir);
+			cos[0] = fabs(ftmf4_vdot(vmult(&ray->ndir, -1.0f), phit->vnormal));
+			cos[1] = fabs(ftmf4_vdot(reflect_vector(cos[0], ray->ndir,
+							phit->vnormal), ray_to_light.ndir));
 			result = ftmf4_vadd(result, vmult(&pl->color, pl->intensity
-						* (cos_angle[0] + pow(cos_angle[1], SPECULAR_POWER))));
+						* (cos[0] + pow(cos[1], SPECULAR_POWER))));
 		}
 	}
 	clamp(&result);
