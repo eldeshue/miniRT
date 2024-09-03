@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/03 14:24:30 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/03 14:28:19 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@ static float	phong_reflect(const t_ray *prtol, const t_ray *pgaze,
 			reflect_vector(diffuse_factor,
 				pgaze->ndir, phit->vnormal), prtol->ndir);
 
-	return (diffuse_factor + pow(specular_factor, SPECULAR_POWER));
+	return (DIFFUSION_INTENSITY * diffuse_factor
+		+ SPECULAR_INTENSITY * pow(specular_factor, SPECULAR_POWER));
 }
 
 static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
@@ -66,7 +67,6 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 	clamp(&result);
 	return (result);
 }
-
 // reflect
 t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc,
 							t_ray *ray, t_hit hit)
