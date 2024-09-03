@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/03 15:17:19 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/03 18:18:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@
 
 // check shadow
 static int	is_shadowed(t_render_resource *prsrc,
-							t_ray *pray_to_light)
+							t_ray *pray_to_light,
+							const float dist_to_light)
 {
+	t_hit	shadow_hit;
+
 	pray_to_light->pstart = ftmf4_vadd(pray_to_light->pstart,
 			vmult(&pray_to_light->ndir, 0.005f));
-	return (get_hit_per_ray(prsrc, pray_to_light).pobj != NULL);
+	shadow_hit = get_hit_per_ray(prsrc, pray_to_light);
+	return (shadow_hit.pobj != NULL && shadow_hit.dist < dist_to_light);
 }
 
 static t_FTMFLOAT4	reflect_vector(float angle, t_FTMFLOAT4 v,
@@ -51,6 +55,7 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 	t_ray		ray_to_light;
 	t_light		*pl;
 	size_t		idx;
+	float		dist;
 
 	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
 	idx = -1;
@@ -59,8 +64,9 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 		pl = *((t_light **)prsrc->lights->at(prsrc->lights, idx));
 		ray_to_light.pstart = phit->ppos;
 		ray_to_light.ndir = ftmf4_vsub(pl->ppos, phit->ppos);
+		dist = ftmf4_vsize(&ray_to_light.ndir);
 		ftmf4_vnormalize(&ray_to_light.ndir);
-		if (!is_shadowed(prsrc, &ray_to_light))
+		if (!is_shadowed(prsrc, &ray_to_light, dist))
 			result = ftmf4_vadd(result, vmult(&pl->color, pl->intensity
 						* phong_reflect(&ray_to_light, ray, phit)));
 	}
