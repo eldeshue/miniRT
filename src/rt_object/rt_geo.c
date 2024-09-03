@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 19:52:18 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/09 20:00:06 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/03 15:13:06 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@ t_plane	*new_plane(t_obj_desc *d)
 	self->m = d->m;
 	self->pcenter = d->p1;
 	self->vnormal = d->p2;
+	ftmf4_vnormalize(&self->vnormal);
 	return (self);
 }
 
