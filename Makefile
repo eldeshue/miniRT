@@ -25,6 +25,11 @@ srcs = ./src/raytracer/reflect.c \
 ./src/raytracer/view_plane.c \
 ./src/rt_object/rt_geo.c \
 ./src/rt_object/rt_obj.c \
+./src/parser/prs_error_exit.c \
+./src/parser/prs_readfile.c \
+./src/parser/prs_atof.c \
+./src/parser/prs_object.c \
+./src/parser/prs_scene.c 
 
 OBJS := $(srcs:.c=.o)
 

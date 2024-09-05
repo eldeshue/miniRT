@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:39:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/28 20:30:45 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/05 13:33:05 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	init_render_resource(t_render_resource *self, char **argv)
 
 	//
 	argv++;
-
+	(void) argv;
 	// test code
 	// camera init
 	self->fov = 90;
@@ -42,7 +42,7 @@ int	init_render_resource(t_render_resource *self, char **argv)
 	tmp.p1 = ftmf4_set_vector(0.0f, 0.0f, 40.0f, 1.0f);        // 중심 좌표 (100, 100, 50)
 	tmp.val = 30.0f;                                                // 반지름 30
 	tmp.type = sphere;
-	// self->render_objects->push_back(self->render_objects, &tmp);
+	self->render_objects->push_back(self->render_objects, &tmp);
 
 	// cylinder
 	tmp.m.obj_color = ftmf4_set_vector(120.0f, 5.0f, 5.0f, 0.0f);	// green
@@ -67,7 +67,7 @@ int	init_render_resource(t_render_resource *self, char **argv)
 	tmp.p2 = ftmf4_set_vector(100.0f, 0.0f, 70.0f, 1.0f);  // vertex
 	tmp.val = 20.0f;
 	tmp.type = cone;
-	self->render_objects->push_back(self->render_objects, &tmp);
+	// self->render_objects->push_back(self->render_objects, &tmp);
 
 	// light init
 	t_light	l;
