@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/03 18:18:02 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/05 18:45:10 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,11 @@ static t_FTMFLOAT4	reflect_vector(float angle, t_FTMFLOAT4 v,
 {
 	const t_FTMFLOAT4	common = vmult(&s, angle);
 	const t_FTMFLOAT4	not_common = ftmf4_vadd(v, common);
+	t_FTMFLOAT4			result;
 
-	return (ftmf4_vadd(common, not_common));
+	result = ftmf4_vadd(common, not_common);
+	ftmf4_vnormalize(&result);
+	return (result);
 }
 
 static float	phong_reflect(const t_ray *prtol, const t_ray *pgaze,
