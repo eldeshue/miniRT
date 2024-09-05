@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   reflect.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/28 20:15:23 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/03 18:18:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@
 
 // check shadow
 static int	is_shadowed(t_render_resource *prsrc,
-							t_ray *pray_to_light)
+							t_ray *pray_to_light,
+							const float dist_to_light)
 {
+	t_hit	shadow_hit;
+
 	pray_to_light->pstart = ftmf4_vadd(pray_to_light->pstart,
 			vmult(&pray_to_light->ndir, 0.005f));
-	return (get_hit_per_ray(prsrc, pray_to_light).pobj != NULL);
+	shadow_hit = get_hit_per_ray(prsrc, pray_to_light);
+	return (shadow_hit.pobj != NULL && shadow_hit.dist < dist_to_light);
 }
 
 static t_FTMFLOAT4	reflect_vector(float angle, t_FTMFLOAT4 v,
@@ -32,6 +36,18 @@ static t_FTMFLOAT4	reflect_vector(float angle, t_FTMFLOAT4 v,
 	return (ftmf4_vadd(common, not_common));
 }
 
+static float	phong_reflect(const t_ray *prtol, const t_ray *pgaze,
+								const t_hit *phit)
+{
+	const float	diffuse_factor = ftmf4_vdot(prtol->ndir, phit->vnormal);
+	const float	specular_factor = ftmf4_vdot(
+			reflect_vector(diffuse_factor,
+				pgaze->ndir, phit->vnormal), prtol->ndir);
+
+	return (DIFFUSION_INTENSITY * diffuse_factor
+		+ SPECULAR_INTENSITY * pow(specular_factor, SPECULAR_POWER));
+}
+
 static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 								t_ray *ray, const t_hit *phit)
 {
@@ -39,7 +55,7 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 	t_ray		ray_to_light;
 	t_light		*pl;
 	size_t		idx;
-	float		cos_angle[2];
+	float		dist;
 
 	result = vmult(&prsrc->amb_color, prsrc->amb_intens);
 	idx = -1;
@@ -48,23 +64,18 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 		pl = *((t_light **)prsrc->lights->at(prsrc->lights, idx));
 		ray_to_light.pstart = phit->ppos;
 		ray_to_light.ndir = ftmf4_vsub(pl->ppos, phit->ppos);
+		dist = ftmf4_vsize(&ray_to_light.ndir);
 		ftmf4_vnormalize(&ray_to_light.ndir);
-		if (!is_shadowed(prsrc, &ray_to_light))
-		{
-			cos_angle[0] = ftmf4_vdot(vmult(&ray->ndir, -1.0f), phit->vnormal);
-			cos_angle[1] = ftmf4_vdot(reflect_vector(cos_angle[0], ray->ndir,
-						phit->vnormal), ray_to_light.ndir);
+		if (!is_shadowed(prsrc, &ray_to_light, dist))
 			result = ftmf4_vadd(result, vmult(&pl->color, pl->intensity
-						* (cos_angle[0] + pow(cos_angle[1], SPECULAR_POWER))));
-		}
+						* phong_reflect(&ray_to_light, ray, phit)));
 	}
 	clamp(&result);
 	return (result);
 }
 
 // reflect
-t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc,
-							t_ray *ray, t_hit hit)
+t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc, t_ray *ray, t_hit hit)
 {
 	t_material const	*pm = &(((t_plane *)(hit.pobj))->m);
 	t_FTMFLOAT4			result;
