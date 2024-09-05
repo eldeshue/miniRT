@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:09 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/03 15:22:06 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/08/31 17:49:24 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,10 @@ void	init_hit(t_hit *hit)
 	hit->vnormal = ftmf4_set_vector(0, 0, 0, 0);
 }
 
-t_FTMFLOAT4 vscale(t_FTMFLOAT4 v, float s) {
-	t_FTMFLOAT4	result;
-
-	result.data[0] = v.data[0] * s;
-	result.data[1] = v.data[1] * s;
-	result.data[2] = v.data[2] * s;
-	result.data[3] = v.data[3] * s;
-	return (result);
+void	process_wrong_hit(t_hit *hit)
+{
+	hit->dist = FLOAT_MAX;
+	hit->pobj = NULL;
 }
 
 void	set_face_normal(t_hit *hit, t_ray *r, t_FTMFLOAT4 outward_normal)
@@ -44,5 +40,25 @@ void	set_face_normal(t_hit *hit, t_ray *r, t_FTMFLOAT4 outward_normal)
 	if (front_face)
 		hit->vnormal = outward_normal;
 	else
-		hit->vnormal = vscale(outward_normal, -1);
+		hit->vnormal = vmult(&outward_normal, -1);
+}
+
+float	find_intersection_time(float t1, float t2)
+{
+	if (t1 > EPSILON && t2 > EPSILON)
+	{
+		if (t1 < t2)
+			return (t1);
+		else
+			return (t2);
+	}
+	else if ((t1 < EPSILON && t2 > EPSILON) || (t1 > EPSILON && t2 < EPSILON))
+	{
+		if (t1 < EPSILON)
+			return (t2);
+		else
+			return (t1);
+	}
+	else
+		return (FLOAT_MAX);
 }
