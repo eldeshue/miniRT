@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:24 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/31 20:01:08 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/03 16:14:52 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-
 static void	plane_coll_set_vars(t_plane_coll_vars *vars, t_FTMFLOAT4 p0_minus_o,
 								t_FTMFLOAT4 ndir, t_FTMFLOAT4 vnormal)
 {
@@ -21,7 +20,7 @@ static void	plane_coll_set_vars(t_plane_coll_vars *vars, t_FTMFLOAT4 p0_minus_o,
 	if (fabs(vars->denom) < EPSILON)
 		vars->t = FLOAT_MAX;
 	else
-		vars->t = ftmf4_vdot(p0_minus_o, vnormal) / vars->denom;
+		vars->t = -1.0f;
 }
 
 static void	plane_coll_set_hit(t_hit *hit, t_ray *r, t_plane *plane,

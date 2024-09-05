@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:09 by dogwak            #+#    #+#             */
 /*   Updated: 2024/08/31 17:49:24 by hyeonwch         ###   ########.fr       */
@@ -34,7 +34,7 @@ void	process_wrong_hit(t_hit *hit)
 
 void	set_face_normal(t_hit *hit, t_ray *r, t_FTMFLOAT4 outward_normal)
 {
-	int front_face;
+	int	front_face;
 
 	front_face = ftmf4_vdot(r->ndir, outward_normal) < 0;
 	if (front_face)

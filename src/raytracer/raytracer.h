@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/22 19:10:16 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/03 15:53:24 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
 # define SAMPLING_LEVEL 1.0f
-# define SPECULAR_POWER 25
+
+# define DIFFUSION_INTENSITY 1.0f
+# define SPECULAR_INTENSITY 0.001f
+# define SPECULAR_POWER 30
 
 # include "../ft_graphics/ft_graphics.h"
 # include "../ft_vector/ft_vector.h"
