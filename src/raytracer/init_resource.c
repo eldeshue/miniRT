@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:39:55 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/31 21:04:56 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/05 14:02:37 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	init_render_resource(t_render_resource *self, char **argv)
 
 	//
 	argv++;
-
+	(void)argv;
 	// test code
 	// camera init
 	self->fov = 90;

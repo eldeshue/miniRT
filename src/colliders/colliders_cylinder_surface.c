@@ -40,7 +40,6 @@ void	cy_coll_set_vars(t_cylinder_coll_vars *vars, t_ray *r, void *obj)
 {
 	float		a_dot;
 	float		c_dot;
-	float		radius;
 	t_cylinder	*cylinder;
 	t_FTMFLOAT4	top_to_bottom;
 
@@ -52,7 +51,6 @@ void	cy_coll_set_vars(t_cylinder_coll_vars *vars, t_ray *r, void *obj)
 	vars->pobj = obj;
 	a_dot = ftmf4_vdot(r->ndir, vars->h_unit);
 	c_dot = ftmf4_vdot(vars->oc, vars->h_unit);
-	radius = vars->radius;
 	cy_solve_quadratic(vars, r, a_dot, c_dot);
 	cylinder = (t_cylinder *)vars->pobj;
 	vars->cylinder_axis = ftmf4_vsub(cylinder->pcenter2, cylinder->pcenter1);
