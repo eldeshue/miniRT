@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/05 17:29:22 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/05 19:14:54 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 
 # define DIFFUSION_INTENSITY 0.5f
 # define SPECULAR_INTENSITY 0.5f
-# define SPECULAR_POWER 40
+# define SPECULAR_POWER 50
 
 # include "../ft_graphics/ft_graphics.h"
 # include "../ft_vector/ft_vector.h"
