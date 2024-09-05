@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_cone.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/08/31 20:18:28 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/05 16:50:56 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,9 +129,11 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 	init_hit(&hit_surface);
 	init_hit(&hit_cap);
 	init_coll_vars(&vars);
-	vars.h_unit = ftmf4_vsub(((t_cone *)obj)->pvertex, ((t_cone *)obj)->pcenter);
+	vars.h_unit = ftmf4_vsub(((t_cone *)obj)->pvertex,
+			((t_cone *)obj)->pcenter);
 	ftmf4_vnormalize(&vars.h_unit);
 	vars.pobj = obj;
+	//
 	cone_coll_set_vars(&vars, (t_cone *)obj, (t_ray *)r);
 	if (vars.t != FLOAT_MAX)
 		co_check_coll_surface(&hit_surface, &vars, (t_ray *)r);
