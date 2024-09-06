@@ -16,6 +16,9 @@ void	prs_func_select(int fd, t_ft_string *word, t_ft_string *line, t_render_reso
 		if (word->compare(word, tmp) == 0 && word->size == tmp->size)
 		{
 			line->getline(line, fd);
+			printf("word : %s\n", word->pbuffer);
+			printf("tmp : %s\n", tmp->pbuffer);
+			printf("line : %s\n", line->pbuffer);
 			parser[i].func(line, resources);
 			break ;
 		}

@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:52 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/04 13:28:56 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/05 20:33:48 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ float prs_atof(t_ft_string **str)
 	ret *= sign;
 	if ((*str)->size > i)
 	{
+		if (*((*str)->at((*str), i)) == 'f')
+			i++;
 		if (*((*str)->at((*str), i)) == ',')
 			i++;
 		t_ft_string	*tmp = (*str)->substr((*str), i, (*str)->size - i);
