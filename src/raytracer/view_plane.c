@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:15:47 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/03 15:11:18 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/06 17:50:22 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,12 @@ static void	set_points(t_render_resource *const prsrc,
 void	set_view_plane(t_render_resource *const prsrc)
 {
 	t_FTMFLOAT4			plu;
+	t_FTMFLOAT4			vdx;
+	t_FTMFLOAT4			vdy;
 
 	ftmf4_vnormalize(&prsrc->cam.vtarget);
 	if (fabs(ftmf4_vdot(prsrc->cam.vtarget, prsrc->cam.vup)) == 1.0f)
 		prsrc->cam.vup.data[0] += 0.0001f;
-	set_property(prsrc, &plu, &prsrc->vdx, &prsrc->vdy);
-	set_points(prsrc, &plu, &prsrc->vdx, &prsrc->vdy);
+	set_property(prsrc, &plu, &vdx, &vdy);
+	set_points(prsrc, &plu, &vdx, &vdy);
 }

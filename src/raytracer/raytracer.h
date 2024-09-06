@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/05 19:14:54 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/06 17:55:23 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # define SCREEN_WIDTH 1920
 # define SCREEN_HEIGHT 1080
-# define SAMPLING_LEVEL 1.0f
 
 # define DIFFUSION_INTENSITY 0.5f
 # define SPECULAR_INTENSITY 0.5f
@@ -43,8 +42,6 @@ typedef struct s_render_resource
 	t_FTCAMERA	cam;
 	t_FTMFLOAT4	*view_plane;
 	float		fov;
-	t_FTMFLOAT4	vdx;
-	t_FTMFLOAT4	vdy;
 	float		amb_intens;
 	t_FTMFLOAT4	amb_color;
 	t_ft_vector	*lights;
