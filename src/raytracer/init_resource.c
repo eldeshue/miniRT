@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   init_resource.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:39:55 by dogwak            #+#    #+#             */
 /*   Updated: 2024/09/05 21:54:47 by dogwak           ###   ########.fr       */
@@ -21,7 +21,8 @@ int	init_render_resource(t_render_resource *self, char **argv)
 
 	//
 	argv++;
-	(void)argv;
+
+	(void) argv;
 	// test code
 	// camera init
 	self->fov = 90;
