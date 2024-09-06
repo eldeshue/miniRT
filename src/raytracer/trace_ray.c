@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/14 12:07:22 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/03 16:09:51 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/06 17:58:10 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ t_FTMFLOAT4	trace_ray(t_render_resource *prsrc,
 
 	if (hit.dist > 0 && hit.pobj != NULL)
 	{
-		// phong reflection
 		return (reflect_ray(prsrc, ray, hit));
 	}
 	else
