@@ -63,7 +63,7 @@ void	prs_sphere(t_ft_string *line, t_render_resource *resources)
  *        <identifier> <center> <normal> <diameter> <height> <color>
  * @param line	"cy	0,0,20	0,1,0	10.2	10.4	255,255,255"
  * @param rt	pointer to the raytracer
- * @param p1	center
+ * @param p1	center of cylinder
  * @param p2	top center
  * @param val	diameter
  * @param m.obj_color	color
@@ -72,26 +72,25 @@ void	prs_sphere(t_ft_string *line, t_render_resource *resources)
 void	prs_cylinder(t_ft_string *line, t_render_resource *resources)
 {
 	t_obj_desc	*tmp;
-	t_FTMFLOAT4	p1;
 	t_FTMFLOAT4	normal;
+	t_FTMFLOAT4	cy_center;
 	float		h;
 
-	p1 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
-	normal = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
-	(void)normal;
 	tmp = (t_obj_desc *)malloc(sizeof(t_obj_desc));
+	cy_center = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
+	normal = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	tmp->val = prs_atof(&line);
 	h = prs_atof(&line);
 	tmp->m.obj_color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
+	tmp->p1 = ftmf4_vsub(cy_center, vmult(&normal, h / 2));
+	tmp->p2 = ftmf4_vadd(cy_center, vmult(&normal, h / 2));
 	tmp->type = cylinder;
-	tmp->p1 = ftmf4_set_vector(p1.data[0], p1.data[1], p1.data[2] - h / 2, 1.0f);
-	tmp->p2 = ftmf4_set_vector(p1.data[0], p1.data[1], p1.data[2] + h / 2, 0.0f);
 	resources->render_objects->push_back(resources->render_objects, tmp);
 }
 
 /**
  * @brief parse cone line:
- * 	      <identifier> <center> <normal> <diameter> <height> <color>
+ * 	      <identifier> <center> <topcenter> <diameter> <color>
  * @warning line and world must not be NULL
  * @param line	"co	0,0,20	0,1,0	10.2	10.4	255,255,255"
  * @param rt	pointer to the raytracer
@@ -104,19 +103,12 @@ void	prs_cylinder(t_ft_string *line, t_render_resource *resources)
 void	prs_cone(t_ft_string *line, t_render_resource *resources)
 {
 	t_obj_desc	*tmp;
-	t_FTMFLOAT4	p1;
-	t_FTMFLOAT4	normal;
-	float		h;
 
-	p1 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
-	normal = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
-	(void)normal;
 	tmp = (t_obj_desc *)malloc(sizeof(t_obj_desc));
+	tmp->p1 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
+	tmp->p2 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	tmp->val = prs_atof(&line);
-	h = prs_atof(&line);
 	tmp->m.obj_color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	tmp->type = cone;
-	tmp->p1 = ftmf4_set_vector(p1.data[0], p1.data[1], p1.data[2] - h / 2, 1.0f);
-	tmp->p2 = ftmf4_set_vector(p1.data[0], p1.data[1], p1.data[2] + h / 2, 0.0f);
 	resources->render_objects->push_back(resources->render_objects, tmp);
 }
