@@ -5,7 +5,7 @@ CFLAGS = -Wall -Wextra -Werror
 LDFLAGS = -lm -L. -lmlx -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./src/ft_graphics/ft_math -lftmath -L./src/ft_string -lftstring -L./src/ft_vector -lftvector
 
 # target rule
-NAME = minirt
+NAME = miniRT
 
 srcs = ./src/raytracer/reflect.c \
 ./src/colliders/colliders_utils.c \
@@ -17,7 +17,6 @@ srcs = ./src/raytracer/reflect.c \
 ./src/colliders/colliders_cone.c \
 ./src/light/light.c \
 ./src/main.c \
-./src/raytracer/init_resource.c \
 ./src/raytracer/render_image.c \
 ./src/raytracer/render_resource.c \
 ./src/raytracer/render_window.c \
@@ -31,7 +30,7 @@ srcs = ./src/raytracer/reflect.c \
 ./src/parser/prs_readfile.c \
 ./src/parser/prs_atof.c \
 ./src/parser/prs_object.c \
-./src/parser/prs_scene.c 
+./src/parser/prs_scene.c
 
 OBJS := $(srcs:.c=.o)
 
