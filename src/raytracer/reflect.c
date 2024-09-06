@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/05 21:56:10 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/06 11:35:55 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,23 @@ static int	is_shadowed(t_render_resource *prsrc,
 	return (shadow_hit.pobj != NULL && shadow_hit.dist < dist_to_light);
 }
 
-static t_FTMFLOAT4	reflect_vector(float angle, t_FTMFLOAT4 v,
-									t_FTMFLOAT4 s)
+static t_FTMFLOAT4	reflect_vector(t_FTMFLOAT4 lunit, t_FTMFLOAT4 nunit)
 {
-	const t_FTMFLOAT4	common = vmult(&s, angle);
-	const t_FTMFLOAT4	not_common = ftmf4_vadd(v, common);
-	t_FTMFLOAT4			result;
+	t_FTMFLOAT4	common;
+	t_FTMFLOAT4	not_common;
 
-	result = ftmf4_vadd(common, not_common);
-	ftmf4_vnormalize(&result);
-	return (result);
+	common = vmult(&nunit, ftmf4_vdot(nunit, lunit));
+	not_common = ftmf4_vsub(lunit, common);
+	return (ftmf4_vsub(common, not_common));
 }
 
-static float	phong_reflect(const t_ray *prtol, const t_ray *pgaze,
-								const t_hit *phit)
+static float	phong_reflect(t_ray *prtol, t_ray *pgaze,
+								t_hit *phit)
 {
 	const float	diffuse_factor = ftmf4_vdot(prtol->ndir, phit->vnormal);
 	const float	specular_factor = ftmf4_vdot(
-			reflect_vector(diffuse_factor,
-				pgaze->ndir, phit->vnormal), prtol->ndir);
+			reflect_vector(prtol->ndir, phit->vnormal),
+			vmult(&pgaze->ndir, -1));
 
 	return (DIFFUSION_INTENSITY * diffuse_factor
 		+ SPECULAR_INTENSITY
@@ -53,7 +51,7 @@ static float	phong_reflect(const t_ray *prtol, const t_ray *pgaze,
 }
 
 static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
-								t_ray *ray, const t_hit *phit)
+								t_ray *ray, t_hit *phit)
 {
 	t_FTMFLOAT4	result;
 	t_ray		ray_to_light;
