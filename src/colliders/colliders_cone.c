@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_cone.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/09 12:46:10 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/09 14:48:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void	co_check_coll_surface(t_hit *hit, t_cone_coll_vars *vars, t_ray *r)
 	hit->dist = vars->t;
 	hit->ppos = ray_at(r, vars->t);
 	hv = ftmf4_vsub(hit->ppos, ((t_cone *)vars->pobj)->pvertex);
-	vdot_hv_cv = ftmf4_vdot(hv, vars->cone_axis);
+	vdot_hv_cv = ftmf4_vdot(hv, vmult(&vars->h_unit, -1));
 	size_hv = ftmf4_vsize(&hv);
-	tmp_cos = size_hv / vdot_hv_cv / vars->cone_height / size_hv;
-	hit->vnormal = ftmf4_vadd(vmult(&(vars->h_unit), tmp_cos), hv);
+	tmp_cos = vdot_hv_cv / size_hv;
+	hit->vnormal = ftmf4_vadd(vmult(&vars->h_unit, size_hv / tmp_cos), hv);
 	ftmf4_vnormalize(&hit->vnormal);
 	if (hit->dist != FLOAT_MAX)
 	{
