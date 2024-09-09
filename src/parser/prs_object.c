@@ -32,7 +32,7 @@ void	prs_sphere(t_ft_string *line, t_render_resource *resources)
 	tmp = (t_obj_desc *)malloc(sizeof(t_obj_desc));
 	tmp->type = sphere;
 	tmp->p1 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
-	tmp->val = prs_atof(&line);
+	tmp->val = prs_atof(&line) / 2;
 	tmp->m.obj_color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	resources->render_objects->push_back(resources->render_objects, tmp);
 }
