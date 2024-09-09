@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_cone.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/05 16:50:56 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/09 12:46:10 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	cone_coll_set_vars(t_cone_coll_vars *vars, t_cone *cone, t_ray *r)
 	vars->oc = ftmf4_vsub(r->pstart, cone->pvertex);
 	vars->cone_axis = ftmf4_vsub(cone->pvertex, cone->pcenter);
 	vars->cone_height = ftmf4_vsize(&vars->cone_axis);
-	vars->m = pow(cone->radius / ftmf4_vsize(&vars->cone_axis), 2);
+	vars->m = pow(cone->radius / vars->cone_height, 2);
 	a_dot = ftmf4_vdot(r->ndir, vars->h_unit);
 	c_dot = ftmf4_vdot(vars->oc, vars->h_unit);
 	vars->a = ftmf4_vdot(r->ndir, r->ndir) - (vars->m + 1) * pow(a_dot, 2);
@@ -133,7 +133,6 @@ t_hit	collider_cone(const t_ray *r, void *obj)
 			((t_cone *)obj)->pcenter);
 	ftmf4_vnormalize(&vars.h_unit);
 	vars.pobj = obj;
-	//
 	cone_coll_set_vars(&vars, (t_cone *)obj, (t_ray *)r);
 	if (vars.t != FLOAT_MAX)
 		co_check_coll_surface(&hit_surface, &vars, (t_ray *)r);
