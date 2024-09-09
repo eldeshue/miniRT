@@ -61,11 +61,11 @@ void	prs_check_ext(t_ft_string *file)
  * @issue : file을 열 때 경로를 입력하지 않으면 에러를 반환, 경로를 입력하지 않아도 파일을 열 수 있도록 구현할 지 고민 중
 */
 void	prs_read_file(t_ft_string *file, t_render_resource *resources)
-{  
+{
 	int		fd;
 
-	printf("file name : %s\n", file->pbuffer);
-	fd = open(file->pbuffer, O_RDONLY);
+	printf("file name : %s\n", file->c_str(file));
+	fd = open(file->c_str(file), O_RDONLY);
 	printf("fd : %d\n", fd);
 	if (fd < 0)
 	{
