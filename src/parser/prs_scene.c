@@ -11,16 +11,6 @@ void	prs_ambient(t_ft_string *line, t_render_resource *resources)
 {
 	resources->amb_intens = prs_atof(&line);
 	resources->amb_color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
-	// (void)resources;
-	// printf("-amb start-\n");
-	// printf("A test : %s\n", line->pbuffer);
-	// printf("---intense---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("---color---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("-amb finish-\n");
 }
 
 /**
@@ -32,28 +22,9 @@ void	prs_ambient(t_ft_string *line, t_render_resource *resources)
 void	prs_camera(t_ft_string *line, t_render_resource *resources)
 {
 	resources->cam.vpos = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
-	printf("vpos : %f, %f, %f\n", resources->cam.vpos.data[0], resources->cam.vpos.data[1], resources->cam.vpos.data[2]);
 	resources->cam.vtarget = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
-	printf("vtarget : %f, %f, %f\n", resources->cam.vtarget.data[0], resources->cam.vtarget.data[1], resources->cam.vtarget.data[2]);
 	resources->cam.vup = ftmf4_set_vector(0.0f, 0.0f, 1.0f, 0.0f);
-	printf("vup : %f, %f, %f\n", resources->cam.vup.data[0], resources->cam.vup.data[1], resources->cam.vup.data[2]);
-	// ftmf4_vnormalize(&resources->cam.vtarget);
 	resources->fov = prs_atof(&line);
-	printf("fov : %f\n", resources->fov);
-	// (void)resources;
-	// printf("-camera start-\n");
-	// printf("C test : %s\n", line->pbuffer);
-	// printf("---vtarget---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("---vup---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("---vpos---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("-camera finish-\n");
 }
 
 /**
@@ -71,18 +42,4 @@ void	prs_light(t_ft_string *line, t_render_resource *resources)
 	tmp->intensity = prs_atof(&line);
 	tmp->color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	resources->lights->push_back(resources->lights, tmp);
-	// (void)resources;
-	// printf("-light start-\n");
-	// printf("L test : %s\n", line->pbuffer);
-	// printf("---ppos---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("---intensity---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("---color---\n");
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("atof_result : %f\n", prs_atof(&line));
-	// printf("-light finish-\n");
 }
