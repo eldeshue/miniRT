@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/31 20:49:30 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/10 19:59:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,5 +45,7 @@ t_FTMFLOAT4	ray_at(t_ray *ray, float t);
 void		init_hit(t_hit *hit);
 void		process_wrong_hit(t_hit *hit);
 void		set_face_normal(t_hit *hit, t_ray *r, t_FTMFLOAT4 outward_normal);
+
+t_FTMFLOAT4	get_cone_hit(t_cone *cone, t_cone_coll_vars *vars, t_ray *r);
 
 #endif
