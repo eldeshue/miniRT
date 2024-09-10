@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/09 14:48:02 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/10 19:59:55 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ void	cone_coll_set_vars(t_cone_coll_vars *vars, t_cone *cone, t_ray *r)
 		vars->t = FLOAT_MAX;
 	else
 	{
+		vars->t = 0.0f;
 		vars->sqrt_disc = sqrt(vars->discriminant);
 		vars->t1 = (-vars->b - vars->sqrt_disc) / (2.0 * vars->a);
 		vars->t2 = (-vars->b + vars->sqrt_disc) / (2.0 * vars->a);
-		vars->t = find_intersection_time(vars->t1, vars->t2);
 	}
 }
 
@@ -78,26 +78,21 @@ void	co_check_coll_surface(t_hit *hit, t_cone_coll_vars *vars, t_ray *r)
 	float				vdot_hv_cv;
 	float				size_hv;
 	float				tmp_cos;
-	t_FTMFLOAT4			center_to_hit;
 
-	hit->pobj = vars->pobj;
+	hit->ppos = get_cone_hit(cone, vars, r);
+	if (vars->t == 0.0f)
+	{
+		process_wrong_hit(hit);
+		return ;
+	}
 	hit->dist = vars->t;
-	hit->ppos = ray_at(r, vars->t);
+	hit->pobj = vars->pobj;
 	hv = ftmf4_vsub(hit->ppos, ((t_cone *)vars->pobj)->pvertex);
 	vdot_hv_cv = ftmf4_vdot(hv, vmult(&vars->h_unit, -1));
 	size_hv = ftmf4_vsize(&hv);
 	tmp_cos = vdot_hv_cv / size_hv;
 	hit->vnormal = ftmf4_vadd(vmult(&vars->h_unit, size_hv / tmp_cos), hv);
 	ftmf4_vnormalize(&hit->vnormal);
-	if (hit->dist != FLOAT_MAX)
-	{
-		center_to_hit = ftmf4_vsub(hit->ppos, ((t_cone *)vars->pobj)->pcenter);
-		if (ftmf4_vdot(center_to_hit, vars->cone_axis) < 0
-			|| vars->cone_height < ftmf4_vsize(&center_to_hit))
-			process_wrong_hit(hit);
-	}
-	else
-		process_wrong_hit(hit);
 }
 
 void	init_coll_vars(t_cone_coll_vars *vars)
