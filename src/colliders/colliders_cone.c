@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/10 19:59:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/10 20:12:15 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	co_check_coll_surface(t_hit *hit, t_cone_coll_vars *vars, t_ray *r)
 	float				size_hv;
 	float				tmp_cos;
 
-	hit->ppos = get_cone_hit(cone, vars, r);
+	hit->ppos = get_cone_hit((t_cone *)vars->pobj, vars, r);
 	if (vars->t == 0.0f)
 	{
 		process_wrong_hit(hit);
