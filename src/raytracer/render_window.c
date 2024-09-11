@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_window.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/28 19:05:01 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/11 19:16:55 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,6 @@ t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 	return (result);
 }
 
-/*
-	단일 ray에 대한 pixel color를 초기화.
-
-	슈퍼 샘플링 구현을 위해서는 해당 코드를 변형해야 함.
-*/
 static t_FTCOLOR	get_color_pixel(t_render_resource *const prsrc,
 										int row, int col)
 {
