@@ -54,7 +54,7 @@ void	prs_cylinder(t_ft_string *line, t_render_resource *resources)
 	tmp = (t_obj_desc *)malloc(sizeof(t_obj_desc));
 	cy_center = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
 	normal = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
-	tmp->val = prs_atof(&line);
+	tmp->val = prs_atof(&line) / 2;
 	h = prs_atof(&line);
 	tmp->m.obj_color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	tmp->p1 = ftmf4_vsub(cy_center, vmult(&normal, h / 2));
@@ -78,7 +78,7 @@ void	prs_cone(t_ft_string *line, t_render_resource *resources)
 	tmp = (t_obj_desc *)malloc(sizeof(t_obj_desc));
 	tmp->p1 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 1.0f);
 	tmp->p2 = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
-	tmp->val = prs_atof(&line);
+	tmp->val = prs_atof(&line) / 2;
 	tmp->m.obj_color = ftmf4_set_vector(prs_atof(&line), prs_atof(&line), prs_atof(&line), 0.0f);
 	tmp->type = cone;
 	resources->render_objects->push_back(resources->render_objects, tmp);
