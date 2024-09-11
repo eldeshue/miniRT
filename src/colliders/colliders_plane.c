@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:24 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/05 14:53:38 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/11 18:51:16 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,12 @@ t_hit	collider_plane(const t_ray *r, void *obj)
 	plane = (t_plane *)obj;
 	p0_minus_o = ftmf4_vsub(plane->pcenter, r->pstart);
 	plane_coll_set_vars(&vars, p0_minus_o, r->ndir, plane->vnormal);
-	if (vars.t > 0 && ftmf4_vdot(p0_minus_o, plane->vnormal) < 0)
+	if (vars.t > 0)
+	{
 		plane_coll_set_hit(&hit, (t_ray *)r, plane, vars);
+		if (ftmf4_vdot(p0_minus_o, plane->vnormal) < 0)
+			hit.vnormal = vmult(&hit.vnormal, -1.0f);
+	}
 	else
 		hit.dist = -1.0f;
 	return (hit);
