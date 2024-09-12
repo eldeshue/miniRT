@@ -75,7 +75,7 @@ void	cy_coll_set_surface_hit(t_hit *hit, t_ray *r, t_cylinder_coll_vars *var)
 	}
 	pqtrn = ftmf4_vsub(p_to_hit, vmult(&(var->h_unit), var->height_on_axis));
 	hit->vnormal = *ftmf4_vnormalize(&pqtrn);
-	hit->pobj = vars->pobj;
+	hit->pobj = var->pobj;
 }
 
 void	cy_check_coll_surface(t_cylinder_coll_vars *vars, t_ray *r,
