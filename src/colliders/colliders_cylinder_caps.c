@@ -55,39 +55,43 @@ void	cy_set_coll_cap_hit(t_hit *hit, t_ray *r, float t,
 		process_wrong_hit(hit);
 }
 
+void	cy_set_cap_var_top(t_cylinder_coll_vars *vars, t_ray *r,
+				t_hit *hit_cap, float t)
+{
+	const t_cylinder	*cylinder = (t_cylinder *)vars->pobj;
+
+	vars->cap_center = cylinder->pcenter2;
+	vars->cap_normal = vars->h_unit;
+	cy_set_coll_cap_hit(hit_cap, r, t, *vars);
+}
+
+void	cy_set_cap_var_bottom(t_cylinder_coll_vars *vars, t_ray *r,
+				t_hit *hit_cap, float t)
+{
+	const t_cylinder	*cylinder = (t_cylinder *)vars->pobj;
+
+	vars->cap_center = cylinder->pcenter1;
+	vars->cap_normal = vmult(&(vars->h_unit), -1);
+	cy_set_coll_cap_hit(hit_cap, r, t, *vars);
+}
+
 void	cy_check_coll_cap(t_cylinder_coll_vars *vars, t_ray *r, t_hit *hit_cap)
 {
 	const t_cylinder	*cylinder = (t_cylinder *)vars->pobj;
 	float				t_top;
-	float				t_bottom;
+	float				t_bot;
 
 	t_top = cy_compute_cap_t(r, cylinder->pcenter2, vars->h_unit);
-	t_bottom = cy_compute_cap_t(r, cylinder->pcenter1, vmult(&(vars->h_unit), -1));
-	if (t_top != FLOAT_MAX && t_bottom != FLOAT_MAX)
+	t_bot = cy_compute_cap_t(r, cylinder->pcenter1, vmult(&(vars->h_unit), -1));
+	if (t_top != FLOAT_MAX && t_bot != FLOAT_MAX)
 	{
-		if (t_top < t_bottom)
-		{
-			vars->cap_center = cylinder->pcenter2;
-			vars->cap_normal = vars->h_unit;
-			cy_set_coll_cap_hit(hit_cap, r, t_top, *vars);
-		}
+		if (t_top < t_bot)
+			cy_set_cap_var_top(vars, r, hit_cap, t_top);
 		else
-		{
-			vars->cap_center = cylinder->pcenter1;
-			vars->cap_normal = vmult(&(vars->h_unit), -1);
-			cy_set_coll_cap_hit(hit_cap, r, t_bottom, *vars);
-		}
+			cy_set_cap_var_bottom(vars, r, hit_cap, t_bot);
 	}
 	else if (t_top != FLOAT_MAX)
-	{
-		vars->cap_center = cylinder->pcenter2;
-		vars->cap_normal = vars->h_unit;
-		cy_set_coll_cap_hit(hit_cap, r, t_top, *vars);
-	}
-	else if (t_bottom != FLOAT_MAX)
-	{
-		vars->cap_center = cylinder->pcenter1;
-		vars->cap_normal = vmult(&(vars->h_unit), -1);
-		cy_set_coll_cap_hit(hit_cap, r, t_bottom, *vars);
-	}
+		cy_set_cap_var_top(vars, r, hit_cap, t_top);
+	else if (t_bot != FLOAT_MAX)
+		cy_set_cap_var_bottom(vars, r, hit_cap, t_bot);
 }

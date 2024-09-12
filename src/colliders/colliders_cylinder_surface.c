@@ -57,23 +57,23 @@ void	cy_coll_set_vars(t_cylinder_coll_vars *vars, t_ray *r, void *obj)
 	vars->cylinder_height = ftmf4_vsize(&vars->cylinder_axis);
 }
 
-void	cy_coll_set_surface_hit(t_hit *hit, t_ray *r, t_cylinder_coll_vars *vars)
+void	cy_coll_set_surface_hit(t_hit *hit, t_ray *r, t_cylinder_coll_vars *var)
 {
-	const t_cylinder	*cylinder = (t_cylinder *)vars->pobj;
-	t_FTMFLOAT4	pqtrn;
-	t_FTMFLOAT4	p_to_hit;
+	const t_cylinder	*cylinder = (t_cylinder *)var->pobj;
+	t_FTMFLOAT4			pqtrn;
+	t_FTMFLOAT4			p_to_hit;
 
-	hit->dist = vars->t;
-	hit->ppos = ray_at(r, vars->t);
+	hit->dist = var->t;
+	hit->ppos = ray_at(r, var->t);
 	p_to_hit = ftmf4_vsub(hit->ppos, cylinder->pcenter1);
-	vars->height_on_axis = ftmf4_vdot(p_to_hit, vars->h_unit);
-	if (vars->height_on_axis < 0
-			|| vars->height_on_axis > vars->cylinder_height)
+	var->height_on_axis = ftmf4_vdot(p_to_hit, var->h_unit);
+	if (var->height_on_axis < 0
+		|| var->height_on_axis > var->cylinder_height)
 	{
 		process_wrong_hit(hit);
-		return;
+		return ;
 	}
-	pqtrn = ftmf4_vsub(p_to_hit, vmult(&(vars->h_unit), vars->height_on_axis));
+	pqtrn = ftmf4_vsub(p_to_hit, vmult(&(var->h_unit), var->height_on_axis));
 	hit->vnormal = *ftmf4_vnormalize(&pqtrn);
 	hit->pobj = vars->pobj;
 }

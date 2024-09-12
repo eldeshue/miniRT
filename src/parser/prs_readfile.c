@@ -1,13 +1,26 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   prs_readfile.c                                     :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2024/09/12 18:49:49 by hyeonwch          #+#    #+#             */
+/*   Updated: 2024/09/12 18:50:19 by hyeonwch         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "parser.h"
 
-void	prs_func_select(int fd, t_ft_string *word, t_ft_string *line, t_render_resource *resources)
+void	prs_func_select(int fd, t_ft_string *word,
+		t_ft_string *line, t_render_resource *resources)
 {
 	size_t				i;
 	t_ft_string			*tmp;
 	const t_prs_funcs	parser[] = {
-		{"A", prs_ambient}, {"C", prs_camera}, {"L", prs_light},
-		{"pl", prs_plane}, {"sp", prs_sphere}, {"cy", prs_cylinder},
-		{"co", prs_cone}, {NULL, NULL}};
+	{"A", prs_ambient}, {"C", prs_camera}, {"L", prs_light},
+	{"pl", prs_plane}, {"sp", prs_sphere}, {"cy", prs_cylinder},
+	{"co", prs_cone}, {NULL, NULL}};
 
 	i = 0;
 	while (parser[i].identifier != NULL)
@@ -22,7 +35,7 @@ void	prs_func_select(int fd, t_ft_string *word, t_ft_string *line, t_render_reso
 		i++;
 	}
 	if (parser[i].identifier == NULL)
-			prs_error_exit("Unknown identifier");
+		prs_error_exit("Unknown identifier");
 }
 
 void	prs_rt_file(int fd, t_render_resource *resources)
@@ -55,18 +68,12 @@ void	prs_check_ext(t_ft_string *file)
 	delete_ftstr(extract_ext);
 }
 
-
-/**
- * @brief read file and check extension
- * @issue : file을 열 때 경로를 입력하지 않으면 에러를 반환, 경로를 입력하지 않아도 파일을 열 수 있도록 구현할 지 고민 중
-*/
 void	prs_read_file(t_ft_string *file, t_render_resource *resources)
 {
 	int		fd;
 
 	printf("file name : %s\n", file->c_str(file));
 	fd = open(file->c_str(file), O_RDONLY);
-	printf("fd : %d\n", fd);
 	if (fd < 0)
 	{
 		perror("Error opening file");

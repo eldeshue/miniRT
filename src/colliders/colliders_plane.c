@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:24 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/11 18:51:16 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/12 18:26:37 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	plane_coll_set_hit(t_hit *hit, t_ray *r,
 	hit->dist = vars.t;
 	hit->ppos = ray_at(r, vars.t);
 	hit->vnormal = plane->vnormal;
-//	set_face_normal(hit, r, plane->vnormal);	// why???
 	hit->pobj = plane;
 }
 
