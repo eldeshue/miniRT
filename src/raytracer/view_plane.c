@@ -6,21 +6,13 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/07 16:15:47 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/06 17:50:22 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/11 19:17:26 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include <math.h>
 
-/*
-	asp : aspect ratio, width / height
-	dx : delta x, gap between pixel of x direction
-	dy : delta y, gap between pixel of y direction
-	focal length : distance between camera and view plane
-		fov is vertical fov
-		tand(fov / 2) == tanf(fov / 2 * pi / 180) == asp / focal_len
-*/
 static void	set_property(t_render_resource *const prsrc,
 							t_FTMFLOAT4 *left_up_point,
 							t_FTMFLOAT4 *del_x,
@@ -51,11 +43,6 @@ static void	set_property(t_render_resource *const prsrc,
 			ftmf4_vadd(vmult(del_x, 0.5f), vmult(del_y, 0.5f)));
 }
 
-/*
-	calculate and set position of a pixel on the screen plane
-
-	- all points are described in the world coordinates
-*/
 static void	set_points(t_render_resource *const prsrc,
 							t_FTMFLOAT4 *left_up_point,
 							t_FTMFLOAT4 *del_x,

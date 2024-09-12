@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/06 17:55:23 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/11 19:16:04 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ t_FTMFLOAT4			trace_ray(t_render_resource *prsrc,
 
 // render
 void				render_rt_window(t_render_resource *const prsrc);
-// TODO : rendering image
 
 // mlx hook
 void				set_rt_hook(t_FTMLX *pmlx);

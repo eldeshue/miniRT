@@ -18,7 +18,6 @@ srcs = ./src/raytracer/reflect.c \
 ./src/colliders/colliders_cone.c \
 ./src/light/light.c \
 ./src/main.c \
-./src/raytracer/render_image.c \
 ./src/raytracer/render_resource.c \
 ./src/raytracer/render_window.c \
 ./src/raytracer/set_rt_hook.c \

@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/06 11:35:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/11 19:16:14 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 #include "../light/light.h"
 #include <math.h>
 
-// check shadow
 static int	is_shadowed(t_render_resource *prsrc,
 							t_ray *pray_to_light,
 							const float dist_to_light)
