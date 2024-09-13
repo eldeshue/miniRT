@@ -38,5 +38,6 @@ void	prs_plane(t_ft_string **line, t_render_resource *resources);
 void	prs_sphere(t_ft_string **line, t_render_resource *resources);
 void	prs_cylinder(t_ft_string **line, t_render_resource *resources);
 void	prs_cone(t_ft_string **line, t_render_resource *resources);
+int		prs_is_right_num_of_args(t_ft_string **line, int num)
 
 #endif

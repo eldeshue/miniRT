@@ -22,6 +22,7 @@ void	prs_plane(t_ft_string **line, t_render_resource *resources)
 {
 	t_obj_desc	tmp;
 
+	prs_is_right_num_of_args(line, 3);
 	tmp.type = plane;
 	tmp.p1 = ftmf4_set_vector(prs_atof(line),
 			prs_atof(line), prs_atof(line), 1.0f);
@@ -43,6 +44,7 @@ void	prs_sphere(t_ft_string **line, t_render_resource *resources)
 {
 	t_obj_desc	tmp;
 
+	prs_is_right_num_of_args(line, 3);
 	tmp.type = sphere;
 	tmp.p1 = ftmf4_set_vector(prs_atof(line),
 			prs_atof(line), prs_atof(line), 1.0f);
@@ -66,6 +68,7 @@ void	prs_cylinder(t_ft_string **line, t_render_resource *resources)
 	t_FTMFLOAT4	cy_center;
 	float		h;
 
+	prs_is_right_num_of_args(line, 5);
 	cy_center = ftmf4_set_vector(prs_atof(line),
 			prs_atof(line), prs_atof(line), 1.0f);
 	normal = ftmf4_set_vector(prs_atof(line),
@@ -92,6 +95,7 @@ void	prs_cone(t_ft_string **line, t_render_resource *resources)
 {
 	t_obj_desc	tmp;
 
+	prs_is_right_num_of_args(line, 4);
 	tmp.p1 = ftmf4_set_vector(prs_atof(line),
 			prs_atof(line), prs_atof(line), 1.0f);
 	tmp.p2 = ftmf4_set_vector(prs_atof(line),
