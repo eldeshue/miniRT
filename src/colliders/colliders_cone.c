@@ -6,14 +6,13 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 17:29:56 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/10 20:12:15 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:48:49 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-#include <stdio.h>
 
 void	cone_coll_set_vars(t_cone_coll_vars *vars, t_cone *cone, t_ray *r)
 {

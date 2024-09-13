@@ -13,7 +13,6 @@
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-#include <stdio.h>
 
 void	cy_init_coll_var(t_cylinder_coll_vars *vars, void *obj)
 {

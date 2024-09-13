@@ -13,7 +13,6 @@
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-#include <stdio.h>
 
 float	cy_compute_cap_t(t_ray *r, t_FTMFLOAT4	center, t_FTMFLOAT4	h_unit)
 {

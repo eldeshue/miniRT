@@ -3,17 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_sphere.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:32 by dogwak            #+#    #+#             */
-/*   Updated: 2024/08/31 16:41:27 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:48:00 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-#include <stdio.h>
 
 static void	sphere_coll_set_vars(t_shpere_coll_vars *vars, t_FTMFLOAT4 oc,
 				t_FTMFLOAT4 ndir, float radius)

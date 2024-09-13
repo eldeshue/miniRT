@@ -6,15 +6,13 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/09 14:40:07 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/11 19:16:55 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:45:11 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "raytracer.h"
 #include "../ray/ray.h"
 #include "../ft_graphics/ft_math/ft_math.h"
-
-#include <stdio.h>
 
 t_hit	get_hit_per_ray(t_render_resource *const prsrc,
 								t_ray *const pgaze)

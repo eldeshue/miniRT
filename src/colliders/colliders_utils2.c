@@ -6,14 +6,13 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 19:03:37 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/11 19:15:18 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:47:41 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-#include <stdio.h>
 
 static int	is_position_sane(t_cone const *const cone,
 								t_cone_coll_vars const *const vars,

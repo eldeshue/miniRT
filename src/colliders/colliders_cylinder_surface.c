@@ -13,7 +13,6 @@
 #include "colliders.h"
 #include "collider_obj_vars.h"
 #include <math.h>
-#include <stdio.h>
 
 void	cy_solve_quadratic(t_cylinder_coll_vars *vars, t_ray *r,
 							float a_dot, float c_dot)

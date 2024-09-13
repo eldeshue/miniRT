@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 19:39:12 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/10 19:59:02 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:47:22 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define FLOAT_MAX 3.402823466e+38F
 # define FLOAT_MIN 1.175494351e-38F
 
-// cyllinder collider
 t_hit		collider_cylinder(const t_ray *r, void *obj);
 float		cy_compute_cap_t(t_ray *r, t_FTMFLOAT4	center, t_FTMFLOAT4	h_unit);
 void		cy_set_coll_cap_hit(t_hit *hit, t_ray *r, float t,

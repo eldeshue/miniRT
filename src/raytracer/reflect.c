@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/22 11:40:42 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/11 19:16:14 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 14:45:29 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,6 @@ static t_FTMFLOAT4	light_sum(t_render_resource *prsrc,
 	return (result);
 }
 
-// reflect
 t_FTMFLOAT4	reflect_ray(t_render_resource *prsrc, t_ray *ray, t_hit hit)
 {
 	t_material const	*pm = &(((t_plane *)(hit.pobj))->m);
