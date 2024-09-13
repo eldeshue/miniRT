@@ -6,11 +6,10 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:52 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/12 18:57:16 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:24:19 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "parser.h"
 
 static int	skip_whitespace_and_handle_sign(t_ft_string **str, size_t *i)
@@ -67,10 +66,11 @@ static void	update_string(t_ft_string **str, size_t i)
 {
 	t_ft_string	*tmp;
 
+	tmp = NULL;
 	if ((*str)->size > i && *((*str)->at((*str), i)) == ',')
 		i++;
 	tmp = (*str)->substr((*str), i, (*str)->size - i);
-	free(*str);
+	delete_ftstr(*str);
 	*str = tmp;
 }
 

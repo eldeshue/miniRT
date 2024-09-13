@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/08 18:21:43 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/06 17:36:41 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/12 22:18:58 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int	main(int argc, char *argv[])
 	}
 	file = new_ftstr_cstr(argv[1]);
 	prs_read_file(file, prsrc);
+	delete_ftstr(file);
 	set_rt_hook(&prsrc->ftmlx);
 	render_rt_window(prsrc);
 	delete_render_resource(prsrc);
