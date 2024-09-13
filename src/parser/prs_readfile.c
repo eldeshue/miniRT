@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prs_readfile.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:49:49 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 15:46:32 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:55:59 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ void	prs_func_select(int fd, t_ft_string *word,
 
 void	check_resources(t_render_resource *resources)
 {
+	if (resources->fov < 0 || resources->fov > 179)
+		prs_error_exit("wrong fov value.");
 	if (resources->flag_is_init_cam == 0)
 		prs_error_exit("Camera is not initialized");
 	if (resources->flag_is_init_amb == 0)
