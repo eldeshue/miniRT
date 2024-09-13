@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   colliders_plane.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/20 15:30:24 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/12 18:26:37 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 17:35:22 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	plane_coll_set_vars(t_plane_coll_vars *vars,
 						t_FTMFLOAT4 dir_of_gaze, t_FTMFLOAT4 normal_of_plane)
 {
 	vars->denom = ftmf4_vdot(dir_of_gaze, normal_of_plane);
-	if ((vars->denom) < -EPSILON)
+	if (vars->denom < -EPSILON || vars->denom > EPSILON)
 		vars->t = ftmf4_vdot(from_gaze_to_plane, normal_of_plane) / vars->denom;
 	else
 		vars->t = -1.0f;
@@ -47,8 +47,11 @@ t_hit	collider_plane(const t_ray *r, void *obj)
 	if (vars.t > 0)
 	{
 		plane_coll_set_hit(&hit, (t_ray *)r, plane, vars);
-		if (ftmf4_vdot(p0_minus_o, plane->vnormal) < 0)
+		if (ftmf4_vdot(r->ndir, plane->vnormal) > 0.0f)
+		{
 			hit.vnormal = vmult(&hit.vnormal, -1.0f);
+			hit.ppos = ftmf4_vadd(hit.ppos, vmult(&hit.vnormal, 0.1f));
+		}
 	}
 	else
 		hit.dist = -1.0f;
