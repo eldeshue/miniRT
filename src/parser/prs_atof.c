@@ -6,11 +6,10 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:52 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 12:59:25 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:24:19 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "parser.h"
 #include "parser.h"
 
 static int	skip_whitespace_and_handle_sign(t_ft_string **str, size_t *i)
@@ -71,7 +70,7 @@ static void	update_string(t_ft_string **str, size_t i)
 	if ((*str)->size > i && *((*str)->at((*str), i)) == ',')
 		i++;
 	tmp = (*str)->substr((*str), i, (*str)->size - i);
-	delete_ftstring(*str);
+	delete_ftstr(*str);
 	*str = tmp;
 }
 
@@ -92,6 +91,5 @@ float	prs_atof(t_ft_string **str)
 	}
 	ret *= sign;
 	update_string(str, i);
-	printf("atof start of str : %s\n", (*str)->c_str(*str));
 	return (ret);
 }

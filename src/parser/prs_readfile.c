@@ -6,31 +6,30 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:49:49 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 02:24:19 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:26:23 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "parser.h"
 
 void	prs_func_select(int fd, t_ft_string *word,
-		t_ft_string *line, t_render_resource *resources)
+		t_ft_string **line, t_render_resource *resources)
 {
 	size_t				i;
 	t_ft_string			*tmp;
-
-	tmp = NULL;
 	const t_prs_funcs	parser[] = {
 	{"A", prs_ambient}, {"C", prs_camera}, {"L", prs_light},
 	{"pl", prs_plane}, {"sp", prs_sphere}, {"cy", prs_cylinder},
 	{"co", prs_cone}, {NULL, NULL}};
 
 	i = 0;
+	tmp = NULL;
 	while (parser[i].identifier != NULL)
 	{
 		tmp = new_ftstr_cstr(parser[i].identifier);
 		if (word->compare(word, tmp) == 0 && word->size == tmp->size)
 		{
-			line->getline(line, fd);
+			(*line)->getline(*line, fd);
 			parser[i].func(line, resources);
 			delete_ftstr(tmp);
 			break ;
@@ -44,38 +43,36 @@ void	prs_func_select(int fd, t_ft_string *word,
 
 void	check_resources(t_render_resource *resources)
 {
-	if (resources->cam.vpos.data[0] == 0.0f && resources->cam.vpos.data[1] == 0.0f
+	if (resources->cam.vpos.data[0] == 0.0f
+		&& resources->cam.vpos.data[1] == 0.0f
 		&& resources->cam.vpos.data[2] == 0.0f)
 		prs_error_exit("camera is not defined");
 	if (resources->lights->size == 0)
 		prs_error_exit("light is not defined");
-	if (resources->render_objects->size == 0)
-		prs_error_exit("object is not defined");
 }
 
 void	prs_rt_file(int fd, t_render_resource *resources)
 {
 	t_ft_string	*word;
-	t_ft_string	*line;
+	t_ft_string	**line;
 
+	line = malloc(sizeof(t_ft_string *));
 	while (1)
 	{
-		line = new_ftstr();
+		*line = new_ftstr();
 		word = new_ftstr();
 		word->getword(word, fd);
 		if (word->size == 0)
 		{
 			delete_ftstr(word);
-			delete_ftstr(line);
+			delete_ftstr(*line);
 			break ;
 		}
-		printf("word be : %s\n", word->c_str(word));
 		prs_func_select(fd, word, line, resources);
-		printf("word af : %s\n", word->c_str(word));
-		if (line && line->pbuffer)
-			delete_ftstr(line);
 		delete_ftstr(word);
+		delete_ftstr(*line);
 	}
+	free(line);
 }
 
 void	prs_check_ext(t_ft_string *file)

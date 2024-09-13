@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:43:16 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/12 21:25:36 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 14:13:52 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,11 @@
  * @param rt	pointer to the raytracer
  * @return	void
  */
-void	prs_ambient(t_ft_string *line, t_render_resource *resources)
+void	prs_ambient(t_ft_string **line, t_render_resource *resources)
 {
-	resources->amb_intens = prs_atof(&line);
-	resources->amb_color = ftmf4_set_vector(prs_atof(&line),
-			prs_atof(&line), prs_atof(&line), 0.0f);
+	resources->amb_intens = prs_atof(line);
+	resources->amb_color = ftmf4_set_vector(prs_atof(line),
+			prs_atof(line), prs_atof(line), 0.0f);
 }
 
 /**
@@ -32,14 +32,14 @@ void	prs_ambient(t_ft_string *line, t_render_resource *resources)
  * @param rt	pointer to the raytracer
  * @return	void
  */
-void	prs_camera(t_ft_string *line, t_render_resource *resources)
+void	prs_camera(t_ft_string **line, t_render_resource *resources)
 {
-	resources->cam.vpos = ftmf4_set_vector(prs_atof(&line),
-			prs_atof(&line), prs_atof(&line), 1.0f);
-	resources->cam.vtarget = ftmf4_set_vector(prs_atof(&line),
-			prs_atof(&line), prs_atof(&line), 0.0f);
+	resources->cam.vpos = ftmf4_set_vector(prs_atof(line),
+			prs_atof(line), prs_atof(line), 1.0f);
+	resources->cam.vtarget = ftmf4_set_vector(prs_atof(line),
+			prs_atof(line), prs_atof(line), 0.0f);
 	resources->cam.vup = ftmf4_set_vector(0.0f, 0.0f, 1.0f, 0.0f);
-	resources->fov = prs_atof(&line);
+	resources->fov = prs_atof(line);
 }
 
 /**
@@ -48,14 +48,14 @@ void	prs_camera(t_ft_string *line, t_render_resource *resources)
  * @param rt	pointer to the raytracer
  * @return	void
  */
-void	prs_light(t_ft_string *line, t_render_resource *resources)
+void	prs_light(t_ft_string **line, t_render_resource *resources)
 {
 	t_light	tmp;
 
-	tmp.ppos = ftmf4_set_vector(prs_atof(&line),
-			prs_atof(&line), prs_atof(&line), 1.0f);
-	tmp.intensity = prs_atof(&line);
-	tmp.color = ftmf4_set_vector(prs_atof(&line),
-			prs_atof(&line), prs_atof(&line), 0.0f);
+	tmp.ppos = ftmf4_set_vector(prs_atof(line),
+			prs_atof(line), prs_atof(line), 1.0f);
+	tmp.intensity = prs_atof(line);
+	tmp.color = ftmf4_set_vector(prs_atof(line),
+			prs_atof(line), prs_atof(line), 0.0f);
 	resources->lights->push_back(resources->lights, &tmp);
 }
