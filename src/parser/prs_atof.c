@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   prs_atof.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
+/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:52 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 15:43:28 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 16:47:05 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,6 @@ static int	skip_whitespace_and_handle_sign(t_ft_string **str, size_t *i)
 	int	sign;
 
 	sign = 1;
-	if (*(*str)->at(*str, *i) == ' ' || *(*str)->at(*str, *i) == '\t'
-		|| *(*str)->at(*str, *i) == '\n' || *(*str)->at(*str, *i) == '\r'
-		|| *(*str)->at(*str, *i) == '\f' || *(*str)->at(*str, *i) == '\v')
-		prs_error_exit("Invalid string");
 	while (*(*str)->at(*str, *i) == ' ' || *(*str)->at(*str, *i) == '\t'
 		|| *(*str)->at(*str, *i) == '\n' || *(*str)->at(*str, *i) == '\r'
 		|| *(*str)->at(*str, *i) == '\f' || *(*str)->at(*str, *i) == '\v')
@@ -55,7 +51,7 @@ static float	parse_integer_part(t_ft_string **str, size_t *i)
 static float	parse_decimal_part(t_ft_string **str, size_t *i)
 {
 	float	ret;
-	float	dec;	
+	float	dec;
 
 	ret = 0.0f;
 	dec = 1.0f;
