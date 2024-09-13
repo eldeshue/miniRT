@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:52 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/12 18:57:16 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 12:59:25 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,11 @@ static void	update_string(t_ft_string **str, size_t i)
 {
 	t_ft_string	*tmp;
 
+	tmp = NULL;
 	if ((*str)->size > i && *((*str)->at((*str), i)) == ',')
 		i++;
 	tmp = (*str)->substr((*str), i, (*str)->size - i);
-	free(*str);
+	delete_ftstring(*str);
 	*str = tmp;
 }
 
@@ -91,5 +92,6 @@ float	prs_atof(t_ft_string **str)
 	}
 	ret *= sign;
 	update_string(str, i);
+	printf("atof start of str : %s\n", (*str)->c_str(*str));
 	return (ret);
 }

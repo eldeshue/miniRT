@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:43:16 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/12 18:44:14 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/12 21:25:36 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,13 +50,12 @@ void	prs_camera(t_ft_string *line, t_render_resource *resources)
  */
 void	prs_light(t_ft_string *line, t_render_resource *resources)
 {
-	t_light	*tmp;
+	t_light	tmp;
 
-	tmp = (t_light *)malloc(sizeof(t_light));
-	tmp->ppos = ftmf4_set_vector(prs_atof(&line),
+	tmp.ppos = ftmf4_set_vector(prs_atof(&line),
 			prs_atof(&line), prs_atof(&line), 1.0f);
-	tmp->intensity = prs_atof(&line);
-	tmp->color = ftmf4_set_vector(prs_atof(&line),
+	tmp.intensity = prs_atof(&line);
+	tmp.color = ftmf4_set_vector(prs_atof(&line),
 			prs_atof(&line), prs_atof(&line), 0.0f);
-	resources->lights->push_back(resources->lights, tmp);
+	resources->lights->push_back(resources->lights, &tmp);
 }

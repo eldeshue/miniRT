@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:49:49 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/12 18:50:19 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 02:24:19 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	prs_func_select(int fd, t_ft_string *word,
 {
 	size_t				i;
 	t_ft_string			*tmp;
+
+	tmp = NULL;
 	const t_prs_funcs	parser[] = {
 	{"A", prs_ambient}, {"C", prs_camera}, {"L", prs_light},
 	{"pl", prs_plane}, {"sp", prs_sphere}, {"cy", prs_cylinder},
@@ -30,12 +32,25 @@ void	prs_func_select(int fd, t_ft_string *word,
 		{
 			line->getline(line, fd);
 			parser[i].func(line, resources);
+			delete_ftstr(tmp);
 			break ;
 		}
 		i++;
+		delete_ftstr(tmp);
 	}
 	if (parser[i].identifier == NULL)
 		prs_error_exit("Unknown identifier");
+}
+
+void	check_resources(t_render_resource *resources)
+{
+	if (resources->cam.vpos.data[0] == 0.0f && resources->cam.vpos.data[1] == 0.0f
+		&& resources->cam.vpos.data[2] == 0.0f)
+		prs_error_exit("camera is not defined");
+	if (resources->lights->size == 0)
+		prs_error_exit("light is not defined");
+	if (resources->render_objects->size == 0)
+		prs_error_exit("object is not defined");
 }
 
 void	prs_rt_file(int fd, t_render_resource *resources)
@@ -49,8 +64,17 @@ void	prs_rt_file(int fd, t_render_resource *resources)
 		word = new_ftstr();
 		word->getword(word, fd);
 		if (word->size == 0)
+		{
+			delete_ftstr(word);
+			delete_ftstr(line);
 			break ;
+		}
+		printf("word be : %s\n", word->c_str(word));
 		prs_func_select(fd, word, line, resources);
+		printf("word af : %s\n", word->c_str(word));
+		if (line && line->pbuffer)
+			delete_ftstr(line);
+		delete_ftstr(word);
 	}
 }
 
@@ -58,14 +82,15 @@ void	prs_check_ext(t_ft_string *file)
 {
 	size_t		len;
 	t_ft_string	*extract_ext;
-	t_ft_string	ext;
+	t_ft_string	*ext;
 
 	len = file->size;
-	ext = construct_ftstr_cstr(".rt");
+	ext = new_ftstr_cstr(".rt");
 	extract_ext = file->substr(file, len - 3, 3);
-	if (ext.compare(&ext, extract_ext) != 0)
+	if (ext->compare(ext, extract_ext) != 0)
 		prs_error_exit("file extension is not .rt");
 	delete_ftstr(extract_ext);
+	delete_ftstr(ext);
 }
 
 void	prs_read_file(t_ft_string *file, t_render_resource *resources)
@@ -75,12 +100,10 @@ void	prs_read_file(t_ft_string *file, t_render_resource *resources)
 	printf("file name : %s\n", file->c_str(file));
 	fd = open(file->c_str(file), O_RDONLY);
 	if (fd < 0)
-	{
-		perror("Error opening file");
-		prs_error_exit("file extension is not .rt");
-	}
+		prs_error_exit("Error opening file");
 	prs_check_ext(file);
 	prs_rt_file(fd, resources);
 	close(fd);
+	check_resources(resources);
 	set_view_plane(resources);
 }
