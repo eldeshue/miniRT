@@ -17,8 +17,13 @@ static int	skip_whitespace_and_handle_sign(t_ft_string **str, size_t *i)
 	int	sign;
 
 	sign = 1;
-	while (*((*str)->at((*str), *i)) == ' '
-		|| *((*str)->at((*str), *i)) == '\t')
+	if (*(*str)->at(*str, *i) == ' ' || *(*str)->at(*str, *i) == '\t'
+		|| *(*str)->at(*str, *i) == '\n' || *(*str)->at(*str, *i) == '\r'
+		|| *(*str)->at(*str, *i) == '\f' || *(*str)->at(*str, *i) == '\v')
+		prs_error_exit("Invalid string");
+	while (*(*str)->at(*str, *i) == ' ' || *(*str)->at(*str, *i) == '\t'
+		|| *(*str)->at(*str, *i) == '\n' || *(*str)->at(*str, *i) == '\r'
+		|| *(*str)->at(*str, *i) == '\f' || *(*str)->at(*str, *i) == '\v')
 		(*i)++;
 	if (*((*str)->at((*str), *i)) == '-')
 	{
@@ -33,6 +38,9 @@ static float	parse_integer_part(t_ft_string **str, size_t *i)
 	float	ret;
 
 	ret = 0.0f;
+	if (*i > (*str)->size || *((*str)->at((*str), *i)) < '0'
+		|| *((*str)->at((*str), *i)) > '9')
+		prs_error_exit("Invalid string");
 	while (*i < (*str)->size && *((*str)->at((*str), *i)) >= '0'
 		&& *((*str)->at((*str), *i)) <= '9')
 	{
@@ -51,6 +59,9 @@ static float	parse_decimal_part(t_ft_string **str, size_t *i)
 
 	ret = 0.0f;
 	dec = 1.0f;
+	if (*i > (*str)->size || *((*str)->at((*str), *i)) < '0'
+		|| *((*str)->at((*str), *i)) > '9')
+		prs_error_exit("Invalid string");
 	while (*((*str)->at((*str), *i)) >= '0' && *((*str)->at((*str), *i)) <= '9')
 	{
 		dec /= 10;
