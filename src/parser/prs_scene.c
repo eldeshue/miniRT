@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:43:16 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 14:13:52 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:48:53 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	prs_ambient(t_ft_string **line, t_render_resource *resources)
 	resources->amb_intens = prs_atof(line);
 	resources->amb_color = ftmf4_set_vector(prs_atof(line),
 			prs_atof(line), prs_atof(line), 0.0f);
+	resources->flag_is_init_amb = 1;
 }
 
 /**
@@ -71,6 +72,7 @@ void	prs_camera(t_ft_string **line, t_render_resource *resources)
 			prs_atof(line), prs_atof(line), 0.0f);
 	resources->cam.vup = ftmf4_set_vector(0.0f, 0.0f, 1.0f, 0.0f);
 	resources->fov = prs_atof(line);
+	resources->flag_is_init_cam = 1;
 }
 
 /**

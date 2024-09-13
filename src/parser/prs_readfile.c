@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:49:49 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 14:26:23 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:46:32 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ void	prs_func_select(int fd, t_ft_string *word,
 
 void	check_resources(t_render_resource *resources)
 {
-	if (resources->cam.vpos.data[0] == 0.0f
-		&& resources->cam.vpos.data[1] == 0.0f
-		&& resources->cam.vpos.data[2] == 0.0f)
-		prs_error_exit("camera is not defined");
-	if (resources->lights->size == 0)
-		prs_error_exit("light is not defined");
+	if (resources->flag_is_init_cam == 0)
+		prs_error_exit("Camera is not initialized");
+	if (resources->flag_is_init_amb == 0)
+		prs_error_exit("Ambient light is not initialized");
 }
 
 void	prs_rt_file(int fd, t_render_resource *resources)
@@ -94,6 +92,8 @@ void	prs_read_file(t_ft_string *file, t_render_resource *resources)
 {
 	int		fd;
 
+	resources->flag_is_init_cam = 0;
+	resources->flag_is_init_amb = 0;
 	printf("file name : %s\n", file->c_str(file));
 	fd = open(file->c_str(file), O_RDONLY);
 	if (fd < 0)

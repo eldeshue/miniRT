@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   raytracer.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
+/*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/13 15:39:02 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 15:48:49 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ typedef struct s_render_resource
 	t_FTMFLOAT4	amb_color;
 	t_ft_vector	*lights;
 	t_ft_vector	*render_objects;
+	int			flag_is_init_cam;
+	int			flag_is_init_amb;
 }				t_render_resource;
 
 // resource initialize

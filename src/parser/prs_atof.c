@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/03 17:20:52 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 14:24:19 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:43:28 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ float	prs_atof(t_ft_string **str)
 	size_t	i;
 	int		sign;
 
+	if ((*str)->size == 0)
+		prs_error_exit("Empty string");
 	ret = 0.0f;
 	i = 0;
 	sign = skip_whitespace_and_handle_sign(str, &i);
