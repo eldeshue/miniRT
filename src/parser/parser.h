@@ -6,7 +6,7 @@
 /*   By: hyeonwch <hyeonwch@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/12 18:42:37 by hyeonwch          #+#    #+#             */
-/*   Updated: 2024/09/13 14:14:15 by hyeonwch         ###   ########.fr       */
+/*   Updated: 2024/09/13 15:30:04 by hyeonwch         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,5 +38,6 @@ void	prs_plane(t_ft_string **line, t_render_resource *resources);
 void	prs_sphere(t_ft_string **line, t_render_resource *resources);
 void	prs_cylinder(t_ft_string **line, t_render_resource *resources);
 void	prs_cone(t_ft_string **line, t_render_resource *resources);
+int		prs_is_right_num_of_args(t_ft_string **line, int num);
 
 #endif
