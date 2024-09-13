@@ -6,7 +6,7 @@
 /*   By: dogwak <dogwak@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/08/05 11:21:17 by dogwak            #+#    #+#             */
-/*   Updated: 2024/09/11 19:16:04 by dogwak           ###   ########.fr       */
+/*   Updated: 2024/09/13 15:39:02 by dogwak           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct s_render_resource
 
 // resource initialize
 t_render_resource	*new_render_resource(void);
-int					init_render_resource(t_render_resource *self, char **argv);
 void				delete_render_resource(t_render_resource *self);
 void				set_view_plane(t_render_resource *const prsrc);
 t_hit				get_hit_per_ray(t_render_resource *const prsrc,
