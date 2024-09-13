@@ -17,14 +17,8 @@
 #include "./ft_string/ft_string.h"
 #include "./parser/parser.h"
 
-void leak_check(void)
-{
-	system("leaks miniRT");
-}
-
 int	main(int argc, char *argv[])
 {
-	atexit(leak_check);
 	t_render_resource *const	prsrc = new_render_resource();
 	t_ft_string					*file;
 
