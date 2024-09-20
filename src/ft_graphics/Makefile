@@ -6,7 +6,7 @@ CC = cc
 CFLAGS = -Wall -Wextra -Werror
 
 # sub library
-MLX_LIB = ./mlx/libmlx.dylib
+MLX_LIB = ./mlx/libmlx.a
 MLX_DIR = ./mlx
 FT_MATH_LIB = ./ft_math/libftmath.a
 FT_MATH_DIR = ./ft_math
@@ -26,7 +26,6 @@ all: $(NAME)
 $(NAME) : $(OBJS)
 	$(MAKE) -C $(FT_MATH_DIR)
 	$(MAKE) -C $(MLX_DIR)
-	mv ./mlx/libmlx.dylib ..
 	$(AR) $(ARFLAGS) $@ $^
 
 clean:
@@ -36,7 +35,7 @@ clean:
 
 fclean: clean
 	$(MAKE) -C $(FT_MATH_DIR) fclean
-	rm -f ../libmlx.dylib
+	rm -f $(MLX_LIB)
 	rm -f $(NAME)
 
 re:

@@ -2,7 +2,7 @@
 # compiler option
 CC = cc
 CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lm -L. -lmlx -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./src/ft_graphics/ft_math -lftmath -L./src/ft_string -lftstring -L./src/ft_vector -lftvector
+LDFLAGS = -lm -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./src/ft_graphics/ft_math -lftmath -L./src/ft_graphics/mlx -lmlx -L./src/ft_string -lftstring -L./src/ft_vector -lftvector
 
 # target rule
 NAME = miniRT
@@ -66,9 +66,6 @@ $(NAME): $(OBJS)
 	$(MAKE) -C $(FT_STRING_DIR)
 	$(MAKE) -C $(FT_VECTOR_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
-	if ! [ -f "./libmlx.dylib" ]; then \
-		mv ./src/libmlx.dylib ./; \
-	fi
 	@$(CC) $(LDFLAGS) $(OBJS) -o $@
 
 %.o : %.c
@@ -84,9 +81,6 @@ clean:
 
 
 fclean: clean
-	if [ -f "./libmlx.dylib" ]; then \
-		mv ./libmlx.dylib ./src; \
-	fi
 	$(MAKE) -C $(FT_GRAPHICS_DIR) fclean
 	$(MAKE) -C $(FT_STRING_DIR) fclean
 	$(MAKE) -C $(FT_VECTOR_DIR) fclean
