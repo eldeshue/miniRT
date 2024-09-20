@@ -1,8 +1,8 @@
 
 # compiler option
 CC = cc
-CFLAGS = -Wall -Wextra -Werror
-LDFLAGS = -lm -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./src/ft_graphics/ft_math -lftmath -L./src/ft_graphics/mlx -lmlx -L./src/ft_string -lftstring -L./src/ft_vector -lftvector
+CFLAGS =
+LDFLAGS = -lm -L./src/libft -lft -L./src/ft_graphics -lftgraphics -L./src/ft_graphics/ft_math -lftmath -L./src/ft_graphics/mlx -lmlx_Linux -L./src/ft_string -lftstring -L./src/ft_vector -lftvector -lXext -lX11
 
 # target rule
 NAME = miniRT
@@ -66,7 +66,7 @@ $(NAME): $(OBJS)
 	$(MAKE) -C $(FT_STRING_DIR)
 	$(MAKE) -C $(FT_VECTOR_DIR)
 	$(MAKE) -C $(LIBFT_DIR)
-	@$(CC) $(LDFLAGS) $(OBJS) -o $@
+	@$(CC) $(OBJS) $(LDFLAGS) -o $@
 
 %.o : %.c
 	@$(CC) $(CFLAGS) -c $< -o $@
