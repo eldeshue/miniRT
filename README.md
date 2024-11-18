@@ -91,7 +91,7 @@ For further information, please refer to the files in the scene directory.
 
 ## **Authors and Acknowledgment**
 
-Project Title was created by **[eldeshue](https://github.com/eldeshue)** and **[HyWChoi](https://github.com/HyWChoi)**.
+miniRT was created by **[eldeshue](https://github.com/eldeshue)** and **[HyWChoi](https://github.com/HyWChoi)**.
 
 ## **Contact**
 
