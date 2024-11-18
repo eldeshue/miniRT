@@ -9,13 +9,17 @@ Simple 3D-object renderer based on Raytracing.
 ### **For Mac**
 1. Clone the repository:
 ```
-   git clone https://github.com/eldeshue/miniRT.git
+git clone https://github.com/eldeshue/miniRT.git
 ```
-2. Build the project:
+2. Navigate to the project directory:
+```
+cd miniRT
+```
+3. Build the project:
 ```
 make all
 ```
-3. Start the project:
+4. Start the project:
 ```
 ./miniRT {scene description file}
 ```
@@ -24,17 +28,21 @@ make all
 to run this project on Linux, you need X11 library.
 1. Clone the repository:
 ```
-   git clone https://github.com/eldeshue/miniRT.git
+git clone https://github.com/eldeshue/miniRT.git
 ```
-2. Change branch:
+2. Navigate to the project directory:
+```
+cd miniRT
+```
+3. Change branch:
 ```
   git switch 49-feat-minirt-for-linux
 ```
-3. Build the project:
+4. Build the project:
 ```
 make all
 ```
-4. Start the project:
+5. Start the project:
 ```
 ./miniRT {scene description file}
 ```
@@ -95,4 +103,4 @@ miniRT was created by **[eldeshue](https://github.com/eldeshue)** and **[HyWChoi
 
 ## **Contact**
 
-If you have any questions or comments about miniRT, please contact **[eldeshue](eldeshue@naver.com)**.
+If you have any questions or comments about miniRT, please contact **[eldeshue](mailto:eldeshue@naver.com)**.
